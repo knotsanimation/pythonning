@@ -1,5 +1,6 @@
 import logging
 import os
+import shutil
 import stat
 from pathlib import Path
 
@@ -22,3 +23,25 @@ def set_path_read_only(path: Path):
 
     current_permissions = stat.S_IMODE(os.lstat(path).st_mode)
     os.chmod(path, current_permissions & NO_WRITING)
+
+
+def copy_path_to(path: Path, target_path: Path):
+    """
+    Create a copy of the given filesystem object at the given path.
+
+    Directory are recursively copied and files have their metadata preserved.
+
+    For more complex behavior (symlink, ...) you can copy this function and modify it
+    for your need.
+
+    Args:
+        path: Filesystem path to an existing file or directory
+        target_path: Filesystem path to an existing file or directory, of the same type as the path argument.
+    """
+    if path.is_file():
+        shutil.copy2(path, target_path)
+    else:
+        shutil.copytree(
+            path,
+            target_path,
+        )
