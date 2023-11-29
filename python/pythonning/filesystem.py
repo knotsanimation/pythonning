@@ -67,3 +67,35 @@ def extract_zip(zip_path: Path, remove_zip=True):
         zip_path.unlink()
 
     return extract_root
+
+
+def move_directory_content(
+    src_directory: Path,
+    target_directory: Path,
+    exists_ok: bool = False,
+    recursive: bool = True,
+):
+    """
+    Move (NOT a copy) all the files and directories in the source to the target.
+
+    Handle move between different disk roots.
+
+    Args:
+        src_directory: filesystem path to an existing directory
+        target_directory: filesystem path to an existing directory
+        exists_ok: True to ignore if the target file already exists, else will raise en error.
+        recursive:
+            True to also process all subdirectory recursively to not miss any files.
+    """
+    for src_path in src_directory.glob("*"):
+        target = target_directory / src_path.name
+        if target.exists() and exists_ok:
+            if src_path.is_dir() and recursive:
+                move_directory_content(src_path, target, exists_ok=True, recursive=True)
+            continue
+        if target.exists():
+            raise FileExistsError(f"File already exists on disk: <{target}>")
+        # use shutil instead of os.rename to handle move between disks
+        shutil.move(src_path, target)
+        if src_path.is_dir() and recursive:
+            move_directory_content(src_path, target, exists_ok=True, recursive=True)
