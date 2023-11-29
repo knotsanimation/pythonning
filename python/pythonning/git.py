@@ -25,7 +25,8 @@ def _call_git(git_args: list[str], cwd: Path = None) -> str:
     """
     command = ["git"] + git_args
     commit = subprocess.check_output(command, cwd=cwd)
-    return commit.decode("utf-8")
+    # XXX: is the rstrip safe in all cases ?
+    return commit.decode("utf-8").rstrip("\n")
 
 
 def get_current_commit_hash(repository_path: Path = None) -> str:
