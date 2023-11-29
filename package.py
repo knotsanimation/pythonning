@@ -12,7 +12,10 @@ requires = [
     "python-3+",
 ]
 
-private_build_requires = ["python-3+"]
+private_build_requires = [
+    "python-3+",
+    "rezbuild_utils",
+]
 
 build_command = "python {root}/build.py"
 
