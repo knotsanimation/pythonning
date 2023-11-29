@@ -41,8 +41,15 @@ tests = {
 }
 
 
-tools = []
+tools = [
+    "pythonning-download-clearcache",
+]
 
 
 def commands():
     env.PYTHONPATH.append("{root}/python")
+
+    alias(
+        "pythonning-download-clearcache",
+        "python -c 'import pythonning.web.download;pythonning.web.download.clear_download_cache()'",
+    )
