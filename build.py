@@ -1,9 +1,10 @@
 import logging
 import os
+import shutil
 import sys
 from pathlib import Path
 
-import rezbuild_utils
+# XXX: we cannot use rezbuild_utils as it have a require on pythonning
 
 LOGGER = logging.getLogger(__name__)
 
@@ -13,11 +14,17 @@ def build():
         LOGGER.info(f"skipped")
         return
 
-    rezbuild_utils.copy_build_files(
-        [
-            Path("python"),
-        ]
+    source_dir = Path(os.environ["REZ_BUILD_SOURCE_PATH"])
+    target_dir = Path(os.environ["REZ_BUILD_INSTALL_PATH"])
+
+    file_to_copy = source_dir / "python"
+
+    LOGGER.debug(f"copying {file_to_copy} to {target_dir} ...")
+    shutil.copytree(
+        file_to_copy,
+        target_dir / file_to_copy.name,
     )
+
     LOGGER.info("finished")
 
 
