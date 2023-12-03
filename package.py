@@ -1,6 +1,6 @@
 name = "pythonning"
 
-version = "1.0.2"
+version = "1.0.3"
 
 authors = ["Liam Collod"]
 
@@ -38,6 +38,8 @@ tests = {
         "requires": ["python-3.10", "pytest", "pytest_utils"],
     },
 }
+
+cachable = True
 
 
 tools = [
