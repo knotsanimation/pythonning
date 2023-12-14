@@ -92,6 +92,7 @@ def download_file(
     target_file: Path,
     use_cache: bool = False,
     step_callback: Optional[Callable[[int, int, int], object]] = None,
+    user_agent: str = "Mozilla/5.0",
 ):
     """
     Download a single file from the web at the given url and display download progress in terminal.
@@ -106,6 +107,7 @@ def download_file(
         step_callback:
             function called everytime the download progress one step.
             Arguments for the function are (block_number, block_size, total_size)
+        user_agent: change the User-Agent header to fake the browser used for the connection
     """
     if os.getenv(_DISABLE_CACHE_ENV_VAR):
         use_cache = False
@@ -117,7 +119,35 @@ def download_file(
             shutil.copy2(cache_file, target_file)
             return
 
-    urllib.request.urlretrieve(url, target_file, reporthook=step_callback)
+    url_opener = urllib.request.build_opener()
+    # this prevents some website from blocking the connection (example: Blender)
+    url_opener.addheaders = [("User-agent", user_agent)]
+
+    with url_opener.open(url) as url_stream, open(target_file, "wb") as file:
+        # the following code is mostly copied from :
+        # - urllib.request.urlretrieve: not used because we need to edit addheaders above
+        # - shutil.copyfileobj: not used because we need the step_callback
+
+        headers = url_stream.info()
+        blocksize = 1024 * 8  # shutil use: shutil.COPY_BUFSIZE
+        blocknum = 0
+
+        size = -1
+        if "content-length" in headers:
+            size = int(headers["Content-Length"])
+
+        if step_callback:
+            step_callback(blocknum, blocksize, size)
+
+        while True:
+            buf = url_stream.read(blocksize)
+            if not buf:
+                break
+
+            file.write(buf)
+            blocknum += 1
+            if step_callback:
+                step_callback(blocknum, blocksize, size)
 
     if use_cache:
         LOGGER.debug(f"creating cache from url {url} downloaded as {target_file} ...")
