@@ -5,6 +5,7 @@ from pathlib import Path
 import pytest
 
 from pythonning.filesystem import move_directory_content
+from pythonning.filesystem import get_dir_content
 
 
 LOGGER = logging.getLogger(__name__)
@@ -89,3 +90,13 @@ def test_move_directory_content_recursive(tmp_path: Path, data_root_dir: Path):
     assert Path(test_dst_dir / "somedir" / "file.py").exists()
     assert Path(test_dst_dir / "somedir" / "file.sh").exists()
     assert Path(test_dst_dir / "somedir" / "NEWFILE").exists()
+
+
+def test_get_dir_content(data_root_dir: Path):
+    src_dir = data_root_dir / "getdircontent01"
+
+    result = get_dir_content(src_dir, recursive=False)
+    assert len(result) == 2
+
+    result = get_dir_content(src_dir, recursive=True)
+    assert len(result) == 11, str(list(map(str, result)))
