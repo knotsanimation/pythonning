@@ -18,11 +18,16 @@ def build():
     target_dir = Path(os.environ["REZ_BUILD_INSTALL_PATH"])
 
     file_to_copy = source_dir / "python"
+    copy_dst = target_dir / file_to_copy.name
 
-    LOGGER.debug(f"copying {file_to_copy} to {target_dir} ...")
+    if copy_dst.exists():
+        LOGGER.debug(f"removing existing {copy_dst}")
+        shutil.rmtree(copy_dst)
+
+    LOGGER.debug(f"copying {file_to_copy} to {copy_dst} ...")
     shutil.copytree(
         file_to_copy,
-        target_dir / file_to_copy.name,
+        copy_dst,
     )
 
     LOGGER.info("finished")
