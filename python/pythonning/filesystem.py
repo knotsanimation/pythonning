@@ -4,6 +4,7 @@ import shutil
 import stat
 import zipfile
 from pathlib import Path
+from typing import Callable
 
 LOGGER = logging.getLogger(__name__)
 
@@ -75,6 +76,68 @@ def copy_path_to(path: Path, target_path: Path):
             path,
             target_path,
         )
+
+
+class _Progress:
+    __slots__ = ("current",)
+
+    def __init__(self):
+        self.current: int = 0
+
+    def next(self):
+        self.current += 1
+
+
+def copytree(
+    src_dir: Path,
+    target_dir: Path,
+    callback: Callable[[Path, int, int], None],
+    **kwargs,
+):
+    """
+    Recursively copy a directory tree and return the destination directory.
+
+    Difference with ``shutil.copytree`` is the ability to use callback called on each
+    path copied. Useful to display a progress bar for example.
+
+    Args:
+        src_dir: filesystem path to an existing directory
+        target_dir: filesystem path to an existing directory
+        callback:
+            function called on each path copied with:
+            ("path", "path index", "total number of paths")
+        kwargs: passed to :func:`shutil.copytree`
+    """
+    items_count = len(get_dir_content(src_dir, recursive=True))
+
+    progress = _Progress()
+
+    def _copy_func(_src, _dst, *, _follow_symlinks=True):
+        if kwargs.get("copy_function"):
+            kwargs["copy_function"](_src, _dst, follow_symlinks=_follow_symlinks)
+        else:
+            shutil.copy2(_src, _dst, follow_symlinks=_follow_symlinks)
+        # called for files
+        callback(Path(_src), progress.current, items_count)
+        progress.next()
+
+    def _ignore_func(_src_dir, _content_names):
+        # called for dirs
+        if not str(src_dir) == _src_dir:
+            callback(Path(_src_dir), progress.current, items_count)
+        progress.next()
+        kwargs_func = kwargs.get("ignore")
+        return kwargs_func(_src_dir, _content_names) if kwargs_func else []
+
+    shutil.copytree(
+        src_dir,
+        target_dir,
+        copy_function=_copy_func,
+        ignore=_ignore_func,
+        **kwargs,
+    )
+
+    return target_dir
 
 
 def extract_zip(zip_path: Path, remove_zip=True):

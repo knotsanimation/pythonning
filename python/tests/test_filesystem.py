@@ -1,11 +1,13 @@
 import logging
 import shutil
 from pathlib import Path
+from typing import Optional
 
 import pytest
 
 from pythonning.filesystem import move_directory_content
 from pythonning.filesystem import get_dir_content
+from pythonning.filesystem import copytree
 
 
 LOGGER = logging.getLogger(__name__)
@@ -100,3 +102,47 @@ def test_get_dir_content(data_root_dir: Path):
 
     result = get_dir_content(src_dir, recursive=True)
     assert len(result) == 11, str(list(map(str, result)))
+
+
+class _Progress:
+    def __init__(self):
+        self.current: int = 0
+        self.total: Optional[int] = None
+
+    def next(self):
+        self.current += 1
+
+
+def test_copytree(tmp_path: Path, data_root_dir: Path):
+    src_dir = data_root_dir / "copytree01"
+    dst_copy01_dir = tmp_path / "src01"
+
+    expected_paths = [
+        src_dir / "assets",
+        src_dir / "assets" / "table01",
+        src_dir / "assets" / "table01" / "model",
+        src_dir / "assets" / "table01" / "model" / "model.txt",
+        src_dir / "assets" / "table01" / "surfacing",
+        src_dir / "assets" / "table01" / "surfacing" / "texture_albedo.txt",
+        src_dir / "assets" / "table01" / "surfacing" / "texture_normal.txt",
+        src_dir / "assets" / "table01" / "surfacing" / "texture_specular_roughness.txt",
+        src_dir / "assets" / "table01" / "data.json",
+        src_dir / "assets" / "README.md",
+        src_dir / "README.md",
+    ]
+    expected_paths.sort()
+
+    progress = _Progress()
+    paths = []
+
+    def callback(path, index, total):
+        progress.next()
+        progress.total = total
+        paths.append(path)
+
+    copytree(src_dir, dst_copy01_dir, callback=callback)
+
+    assert progress.current == 11
+    assert progress.total == 11
+    paths.sort()
+    assert expected_paths == paths
