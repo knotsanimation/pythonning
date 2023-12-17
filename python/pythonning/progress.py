@@ -36,7 +36,7 @@ class ProgressBar:
 
     Example::
 
-        suffix="[{bar_index:<2}/{bar_max}] elapsed {elapsed_time:.2f}s"
+        suffix="[{bar_index:<2n}/{bar_max}] elapsed {elapsed_time:.2f}s"
 
     Changing style
     ==============
@@ -59,7 +59,7 @@ class ProgressBar:
         width: width of the progress bar in number of characters, excluding contextual info
         suffix: text after the progress bar
         max_value: value that is considered the end of the progress bar
-        start_value: value that is considered the start of the progress bar
+        min_value: value that is considered the start of the progress bar
         suffix:
             string to format and add after the progress bar. see formatting documentation.
         stream: IO object to write the progress bar to
@@ -73,11 +73,11 @@ class ProgressBar:
 
     def __init__(
         self,
-        max_value: float,
+        min_value: float = 0.0,
+        max_value: float = 1.0,
         width: int = 32,
         prefix: str = "",
         suffix: str = "",
-        start_value: float = 0.0,
         stream=sys.stdout,
         hide_cursor: bool = True,
     ):
@@ -86,8 +86,8 @@ class ProgressBar:
         self.suffix: str = suffix
 
         self._width: int = width
-        self._user_index: float = start_value
-        self._user_min: float = start_value
+        self._user_index: float = min_value
+        self._user_min: float = min_value
         self._user_max: float = max_value
         self._stream = stream
         self._is_ended: bool = False
@@ -100,6 +100,26 @@ class ProgressBar:
     def __del__(self):
         # safety to ensure the cursor is set back to visible once the object is removed
         self.set_cursor_visibility(visible=True)
+
+    @property
+    def max_value(self) -> float:
+        return self._user_max
+
+    @max_value.setter
+    def max_value(self, new_max_value: float):
+        self._user_max = new_max_value
+        if self._had_progress:
+            self.update()
+
+    @property
+    def min_value(self) -> float:
+        return self._user_min
+
+    @min_value.setter
+    def min_value(self, new_min_value: float):
+        self._user_min = new_min_value
+        if self._had_progress:
+            self.update()
 
     @property
     def _bar_width(self) -> int:
@@ -126,7 +146,7 @@ class ProgressBar:
             return 0.0
         return time.time() - self._start_time
 
-    def set_progress(self, total_progress: float):
+    def set_progress(self, total_progress: float, new_maximum: Optional[float] = None):
         """
         Make the bar move up to the given value.
 
@@ -135,12 +155,17 @@ class ProgressBar:
 
         Args:
             total_progress: same unit as maximum value
+            new_maximum: optionally change the maximum value of the progress bar
         """
         self._had_progress = True
+
+        if new_maximum is not None:
+            self._user_max = new_maximum
+
         self._user_index = min(total_progress, self._user_max)
         self.update()
 
-    def add_progress(self, progress_amount: float):
+    def add_progress(self, progress_amount: float, new_maximum: Optional[float] = None):
         """
         Make the bar progress by the given amount.
 
@@ -149,8 +174,13 @@ class ProgressBar:
 
         Args:
             progress_amount: same unit as maximum value
+            new_maximum: optionally change the maximum value of the progress bar
         """
         self._had_progress = True
+
+        if new_maximum is not None:
+            self._user_max = new_maximum
+
         self._user_index = min(self._user_index + progress_amount, self._user_max)
         self.update()
 
