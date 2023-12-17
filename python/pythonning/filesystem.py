@@ -88,6 +88,162 @@ class _Progress:
         self.current += 1
 
 
+def _copyfileobj_readinto(
+    fsrc,
+    fdst,
+    callback: Callable[[int, int], None],
+    length: int = shutil.COPY_BUFSIZE,
+):
+    """
+    COPY of :func:`shutil._copyfileobj_readinto` with added callback.
+
+    readinto()/memoryview() based variant of copyfileobj().
+    ``fsrc`` must support readinto() method and both files must be open in binary mode.
+
+    Args:
+        fsrc: IO object with readinto attribute
+        fdst: IO object with write attribute
+        callback:
+            function called on each chunk of the file read. Size of the chunk correspond
+            to the length parameter. Signature is: ("current chunk size", "chunk length")
+        length: divide the file reading in chunks of the given length, in bytes.
+    """
+    # Localize variable access to minimize overhead.
+    fsrc_readinto = fsrc.readinto
+    fdst_write = fdst.write
+
+    progress = 0
+    with memoryview(bytearray(length)) as mv:
+        while True:
+            n = fsrc_readinto(mv)
+            if not n:
+                break
+            elif n < length:
+                with mv[:n] as smv:
+                    fdst.write(smv)
+            else:
+                fdst_write(mv)
+
+            progress += n
+            callback(progress, length)
+
+
+def _copyfileobj(
+    fsrc,
+    fdst,
+    callback: Callable[[int, int], None],
+    length: int = shutil.COPY_BUFSIZE,
+):
+    """
+    COPY of :func:`shutil.copyfileobj` with added callback.
+
+    copy data from file-like object fsrc to file-like object fdst
+
+    Args:
+        fsrc: IO object with readinto attribute
+        fdst: IO object with write attribute
+        callback:
+            function called on each chunk of the file read. Size of the chunk correspond
+            to the length parameter. Signature is: ("current chunk size", "chunk length")
+        length: divide the file reading in chunks of the given length, in bytes.
+    """
+
+    # Localize variable access to minimize overhead.
+    fsrc_read = fsrc.read
+    fdst_write = fdst.write
+
+    progress = 0
+    while True:
+        buf = fsrc_read(length)
+        if not buf:
+            break
+        fdst_write(buf)
+        progress += len(buf)
+        callback(progress, length)
+
+
+def _copyfile(
+    src_file: Path,
+    target_file: Path,
+    callback: Callable[[int, int, int], None],
+    chunk_size: int = shutil.COPY_BUFSIZE,
+) -> Path:
+    """
+    A modified copy of :func:`shutil.copyfile`
+
+    Args:
+        src_file: filesytem path to an existing file
+        target_file: filesytem path to a non-existing file
+    """
+
+    is_windows = os.name == "nt"
+
+    file_size = os.stat(src_file).st_size
+
+    def _callback_wrapper(chunk: int, chunk_size: int):
+        callback(chunk, chunk_size, file_size)
+
+    with open(src_file, "rb") as fsrc:
+        with open(target_file, "wb") as fdst:
+            # Windows, see:
+            # https://github.com/python/cpython/pull/7160#discussion_r195405230
+            if is_windows and file_size > 0:
+                _copyfileobj_readinto(
+                    fsrc,
+                    fdst,
+                    callback=_callback_wrapper,
+                    length=min(file_size, chunk_size),
+                )
+                return target_file
+
+            # XXX: removed fast copy for other platforms for simplicity
+
+            _copyfileobj(fsrc, fdst, callback=_callback_wrapper, length=chunk_size)
+
+    return target_file
+
+
+def copyfile(
+    src_file: Path,
+    target_path: Path,
+    callback: Callable[[int, int, int], None],
+    chunk_size: int = shutil.COPY_BUFSIZE,
+) -> Path:
+    """
+    Copy src file to target and preserve file stats.
+
+    Similar to :func:`shutil.copy2` but with a callback parameter. Callback is only
+    useful for file above few MB as is it not called enough often for smaller files.
+
+    If you know your source is a symlink and you would like to copy it to target as
+    a symlink then use ``shutil.copy(follow_symlinks=False)`` instead.
+
+    Args:
+        src_file: filesystem path to an existing file
+        target_path: filesystem path to a non-existing file or an existing directory.
+        callback:
+            function called on each chunk of the file read. Signature is :
+            ("current chunk", "chunk size", "total size") -> None
+            all values expressed in bytes.
+        chunk_size:
+            size in bytes of each chunk of the file to read. Must not be bigger
+            than the file size itself.
+            Lower value increase the number of calls to callback but slow the process.
+
+    Returns:
+        target_path
+    """
+    if target_path.is_dir():
+        target_path = target_path / src_file.name
+
+    if target_path.exists():
+        raise FileExistsError(f"target {target_path} already exists")
+
+    _copyfile(src_file, target_path, callback=callback, chunk_size=chunk_size)
+    shutil.copystat(src_file, target_path)
+    return target_path
+
+
 def copytree(
     src_dir: Path,
     target_dir: Path,

@@ -8,6 +8,7 @@ import pytest
 from pythonning.filesystem import move_directory_content
 from pythonning.filesystem import get_dir_content
 from pythonning.filesystem import copytree
+from pythonning.filesystem import copyfile
 
 
 LOGGER = logging.getLogger(__name__)
@@ -146,3 +147,47 @@ def test_copytree(tmp_path: Path, data_root_dir: Path):
     assert progress.total == 11
     paths.sort()
     assert expected_paths == paths
+
+
+def test_copyfile(tmp_path: Path, data_root_dir: Path):
+    src_text_file = data_root_dir / "copyfile" / "text.txt"
+    src_render_file = data_root_dir / "copyfile" / "render.jpg"
+    dst_copy01_dir = tmp_path / "dst01"
+    dst_copy01_dir.mkdir()
+    dst_copy02_dir = tmp_path / "dst02"
+    dst_copy02_dir.mkdir()
+
+    progress = []
+    totals = []
+    chunk_sizes = []
+
+    def _callback(chunk, chunk_size, total):
+        progress.append(chunk)
+        chunk_sizes.append(chunk_size)
+        totals.append(total)
+
+    dst_file = dst_copy01_dir / src_text_file.name
+    assert not dst_file.exists()
+    copyfile(src_text_file, dst_copy01_dir, callback=_callback)
+    assert dst_file.exists()
+    # txt is a small file so only had one call
+    assert len(progress) == 1
+    assert totals[-1] == 3371
+
+    dst_file = dst_copy01_dir / "success.py"
+    assert not dst_file.exists()
+    copyfile(src_text_file, dst_file, callback=_callback)
+    assert dst_file.exists()
+
+    progress = []
+    totals = []
+    chunk_sizes = []
+
+    dst_file = dst_copy02_dir / src_render_file.name
+    assert not dst_file.exists()
+    copyfile(src_render_file, dst_copy02_dir, callback=_callback, chunk_size=280000)
+    assert dst_file.exists()
+
+    assert len(progress) == 7
+    assert totals[-1] == 1685626, totals
+    assert chunk_sizes[-1] == 280000
