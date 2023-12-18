@@ -3,6 +3,7 @@ import os
 import shutil
 from pathlib import Path
 from typing import Callable
+from typing import Optional
 
 from ._retrieving import get_dir_content
 
@@ -118,7 +119,7 @@ def _copyfileobj(
 def _copyfile(
     src_file: Path,
     target_file: Path,
-    callback: Callable[[int, int, int], None],
+    callback: Optional[Callable[[int, int, int], None]] = None,
     chunk_size: int = shutil.COPY_BUFSIZE,
 ) -> Path:
     """
@@ -134,7 +135,8 @@ def _copyfile(
     file_size = os.stat(src_file).st_size
 
     def _callback_wrapper(chunk: int, chunk_size: int):
-        callback(chunk, chunk_size, file_size)
+        if callback:
+            callback(chunk, chunk_size, file_size)
 
     with open(src_file, "rb") as fsrc:
         with open(target_file, "wb") as fdst:
@@ -159,7 +161,7 @@ def _copyfile(
 def copyfile(
     src_file: Path,
     target_path: Path,
-    callback: Callable[[int, int, int], None],
+    callback: Optional[Callable[[int, int, int], None]] = None,
     chunk_size: int = shutil.COPY_BUFSIZE,
 ) -> Path:
     """
