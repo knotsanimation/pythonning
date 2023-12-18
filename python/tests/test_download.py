@@ -2,13 +2,11 @@ import os
 
 from pythonning.web import download_file
 from pythonning.web.download import clear_download_cache
-from pythonning.web.download import _DOWNLOAD_CACHE_ROOT
+from pythonning.web.download import _DOWNLOAD_CACHE
 
 
 def _is_cache_empty() -> bool:
-    if not _DOWNLOAD_CACHE_ROOT.exists():
-        return True
-    return not next(os.scandir(_DOWNLOAD_CACHE_ROOT), None)
+    return _DOWNLOAD_CACHE.is_empty
 
 
 def test_download_file(tmp_path):
