@@ -58,6 +58,7 @@ def _create_cache(file: Path, source_url: str) -> Path:
         LOGGER.debug(f"creating download cache root directory {_DOWNLOAD_CACHE_ROOT}")
         _DOWNLOAD_CACHE_ROOT.mkdir()
 
+    # TODO should this be cleaned as this package should be rez agnostic ?
     build_name = os.getenv("REZ_BUILD_PROJECT_NAME", "none")
     build_version = os.getenv("REZ_BUILD_PROJECT_VERSION", "none")
     prefix = _hash_url(source_url)
