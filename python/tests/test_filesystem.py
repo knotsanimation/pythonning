@@ -9,6 +9,7 @@ from pythonning.filesystem import move_directory_content
 from pythonning.filesystem import get_dir_content
 from pythonning.filesystem import copytree
 from pythonning.filesystem import copyfile
+from pythonning.filesystem._copying import _COPYING_CACHE
 
 
 LOGGER = logging.getLogger(__name__)
@@ -191,3 +192,90 @@ def test_copyfile(tmp_path: Path, data_root_dir: Path):
     assert len(progress) == 7
     assert totals[-1] == 1685626, totals
     assert chunk_sizes[-1] == 280000
+
+
+def test_copyfile_cache(tmp_path: Path, data_root_dir: Path):
+    src_render_file = data_root_dir / "copyfile" / "render.jpg"
+    src_render2_file = data_root_dir / "copyfile" / "render2.jpg"
+    dst_dir = tmp_path / "dst01"
+    dst_dir.mkdir()
+    dst_file_01 = dst_dir / "render-copy1.jpg"
+    dst_file_02 = dst_dir / "render-copy2.jpg"
+    dst_file_03 = dst_dir / "render-copy3.jpg"
+    dst_file_04 = dst_dir / "render-copy4.jpg"
+
+    _COPYING_CACHE.clear()
+    assert _COPYING_CACHE.is_empty
+
+    progress = []
+    totals = []
+    chunk_sizes = []
+
+    def _callback(chunk, chunk_size, total):
+        progress.append(chunk)
+        chunk_sizes.append(chunk_size)
+        totals.append(total)
+
+    copyfile(
+        src_render_file,
+        dst_file_01,
+        callback=_callback,
+        chunk_size=280000,
+        use_cache=True,
+    )
+
+    assert not _COPYING_CACHE.is_empty
+    assert len(progress) == 7 * 2
+    assert progress[-1] == 1685626 * 2
+    assert totals[-1] == 1685626 * 2, totals
+
+    progress = []
+    totals = []
+    chunk_sizes = []
+
+    copyfile(
+        src_render_file,
+        dst_file_02,
+        callback=_callback,
+        chunk_size=280000,
+        use_cache=True,
+    )
+    assert len(progress) == 7
+    assert progress[-1] == 1685626
+    assert totals[-1] == 1685626, totals
+    assert not _COPYING_CACHE.is_empty
+
+    progress = []
+    totals = []
+    chunk_sizes = []
+
+    copyfile(
+        src_render_file,
+        dst_file_03,
+        callback=_callback,
+        chunk_size=280000,
+        use_cache=False,
+    )
+    assert len(progress) == 7
+    assert progress[-1] == 1685626
+    assert totals[-1] == 1685626, totals
+    assert not _COPYING_CACHE.is_empty
+
+    progress = []
+    totals = []
+    chunk_sizes = []
+
+    copyfile(
+        src_render2_file,
+        dst_file_04,
+        callback=_callback,
+        chunk_size=280000,
+        use_cache=True,
+    )
+    assert len(progress) == 7 * 2
+    assert progress[-1] == 1685626 * 2
+    assert totals[-1] == 1685626 * 2, totals
+    assert not _COPYING_CACHE.is_empty
+
+    _COPYING_CACHE.clear()
+    assert _COPYING_CACHE.is_empty
