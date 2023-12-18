@@ -4,6 +4,7 @@ import os
 import shutil
 import tempfile
 from pathlib import Path
+from typing import Callable
 from typing import Optional
 
 LOGGER = logging.getLogger(__name__)
@@ -47,7 +48,12 @@ class FilesCache:
             return True
         return not next(os.scandir(self._path), None)
 
-    def cache_file(self, file_path: Path, unique_id: str) -> Path:
+    def cache_file(
+        self,
+        file_path: Path,
+        unique_id: str,
+        copy_function: Optional[Callable[[Path, Path], None]] = None,
+    ) -> Path:
         """
 
         Args:
@@ -55,10 +61,16 @@ class FilesCache:
             unique_id:
                 unique identifier to characterize the file to cache and allow to retrieve
                 a cache given a similar unique_id
+            copy_function:
+                An optional function that must be called to create the cache. Signature is
+                expected as ("src file", "target file path destination") -> None.
+                If not provided :func:`shutil.copy2` is being used.
 
         Returns:
             filesystem path to the cached file
         """
+        copy_function = copy_function or shutil.copy2
+
         if not self.exists:
             LOGGER.debug(f"creating cache directory <{self._path}>")
             self._path.mkdir()
@@ -72,9 +84,9 @@ class FilesCache:
             )
         )
 
-        LOGGER.debug(f"creating copy in cache <{temp_folder}>")
-        shutil.copy2(file_path, temp_folder)
+        LOGGER.debug(f"creating copy in cache directory <{temp_folder}>")
         cache_file = temp_folder / file_path.name
+        copy_function(file_path, cache_file)
         if not cache_file.exists():
             raise RuntimeError(f"Unkown issue: cache not created at <{cache_file}>")
 
