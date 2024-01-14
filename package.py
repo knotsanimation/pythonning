@@ -1,6 +1,6 @@
 name = "pythonning"
 
-version = "1.5.0"
+version = "1.6.0"
 
 authors = ["Liam Collod"]
 
