@@ -30,7 +30,10 @@ def main():
     git_last_commit = gitget(["rev-parse", "HEAD"], cwd=ROOTDIR)
     git_current_branch = gitget(["branch", "--show-current"], cwd=ROOTDIR)
     git_remote_status = gitget(["status", "--short", "--b", "--porcelain"], cwd=ROOTDIR)
-    git_ghpages_exists = gitget(["rev-parse", "--verify", "gh-pages"], cwd=ROOTDIR)
+    try:
+        git_ghpages = gitget(["rev-parse", "--verify", "gh-pages"], cwd=ROOTDIR)
+    except subprocess.CalledProcessError:
+        git_ghpages = None
 
     if git_status:
         raise RuntimeError(f"Uncommited changes found: {git_status}.")
@@ -40,7 +43,7 @@ def main():
             f"current git branch is `{git_current_branch}`, expected `main`."
         )
 
-    if not git_ghpages_exists:
+    if not git_ghpages:
         raise RuntimeError("Branch gh-pages doesn't exists. Create it first.")
 
     if re.search(rf"## {git_current_branch}.+\[ahead", git_remote_status):
