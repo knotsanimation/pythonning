@@ -22,8 +22,7 @@ class ProgressBar:
     Tips: you can add coloring by adding the color special character in the
     prefix and suffix strings.
 
-    Text Formatting
-    ===============
+    **Text Formatting**
 
     Prefix and suffix are formatted with the following tokens :
 
@@ -38,8 +37,7 @@ class ProgressBar:
 
         suffix="[{bar_index:<2n}/{bar_max}] elapsed {elapsed_time:.2f}s"
 
-    Changing style
-    ==============
+    **Changing style**
 
     To change the bar style you can subclass it and override the class attributes.
 
@@ -48,21 +46,20 @@ class ProgressBar:
         class MyProgressBar(ProgressBar):
             bar_fill = "#"
 
-    Future improvement
-    ==================
+    **Future improvement**
 
     * Missing time estimation features.
 
     Args:
+        min_value: value that is considered the start of the progress bar
+        max_value: value that is considered the end of the progress bar
+        width: width of the progress bar in number of characters, excluding contextual info
         prefix:
             string to format and add before the progress bar. see formatting documentation.
-        width: width of the progress bar in number of characters, excluding contextual info
-        suffix: text after the progress bar
-        max_value: value that is considered the end of the progress bar
-        min_value: value that is considered the start of the progress bar
         suffix:
             string to format and add after the progress bar. see formatting documentation.
         stream: IO object to write the progress bar to
+        hide_cursor: hide blinking cursor in stdout while the progress bar is displaying
     """
 
     bar_before = " |"
