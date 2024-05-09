@@ -1,3 +1,5 @@
+# XXX: keep any change in sync with setup.py
+
 name = "pythonning"
 
 version = "1.6.0"
