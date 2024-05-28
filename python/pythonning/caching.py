@@ -5,6 +5,7 @@ import shutil
 import tempfile
 from pathlib import Path
 from typing import Callable
+from typing import List
 from typing import Optional
 
 LOGGER = logging.getLogger(__name__)
@@ -117,7 +118,7 @@ class FilesCache:
 
         cache_prefix = _hash_str(unique_id)
 
-        tempfolder: list[Path] = list(self._path.glob(f"{cache_prefix}*"))
+        tempfolder: List[Path] = list(self._path.glob(f"{cache_prefix}*"))
         if len(tempfolder) > 1:
             # should not happen but safety check
             LOGGER.warning(

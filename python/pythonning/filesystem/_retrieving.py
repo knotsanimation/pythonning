@@ -1,12 +1,12 @@
 import logging
 import os
 from pathlib import Path
-
+from typing import List
 
 LOGGER = logging.getLogger(__name__)
 
 
-def get_dir_content(src_dir: Path, recursive=True) -> list[Path]:
+def get_dir_content(src_dir: Path, recursive=True) -> List[Path]:
     """
     Return a list of paths this directory contains.
 

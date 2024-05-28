@@ -8,11 +8,12 @@ by calling ``git`` in the terminal.
 import logging
 import subprocess
 from pathlib import Path
+from typing import List
 
 LOGGER = logging.getLogger(__name__)
 
 
-def _call_git(git_args: list[str], cwd: Path = None) -> str:
+def _call_git(git_args: List[str], cwd: Path = None) -> str:
     """
     Call a git command in the terminal and return its output as a decoded string.
 
