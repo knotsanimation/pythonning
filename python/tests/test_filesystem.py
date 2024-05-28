@@ -144,10 +144,10 @@ def test_copytree(tmp_path: Path, data_root_dir: Path):
 
     copytree(src_dir, dst_copy01_dir, callback=callback)
 
-    assert progress.current == 11
-    assert progress.total == 11
     paths.sort()
     assert expected_paths == paths
+    assert progress.current == 11
+    assert progress.total == 11
 
 
 def test_copyfile(tmp_path: Path, data_root_dir: Path):

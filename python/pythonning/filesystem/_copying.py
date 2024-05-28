@@ -307,7 +307,7 @@ def copytree(
 
     def _ignore_func(_src_dir, _content_names):
         # called for dirs
-        if not str(src_dir) == _src_dir:
+        if not str(src_dir) == str(_src_dir):
             callback(Path(_src_dir), progress.current, items_count)
         progress.next()
         kwargs_func = kwargs.get("ignore")
