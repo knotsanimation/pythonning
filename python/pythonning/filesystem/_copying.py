@@ -14,6 +14,9 @@ LOGGER = logging.getLogger(__name__)
 
 _COPYING_CACHE = FilesCache("pythonning-filesystem-copying")
 
+_IS_WINDOWS = os.name == "nt"
+COPY_BUFSIZE = 1024 * 1024 if _IS_WINDOWS else 64 * 1024
+
 
 def copy_path_to(path: Path, target_path: Path):
     """
@@ -51,7 +54,7 @@ def _copyfileobj_readinto(
     fsrc,
     fdst,
     callback: Callable[[int, int], None],
-    length: int = shutil.COPY_BUFSIZE,
+    length: int = COPY_BUFSIZE,
 ):
     """
     COPY of :func:`shutil._copyfileobj_readinto` with added callback.
@@ -91,7 +94,7 @@ def _copyfileobj(
     fsrc,
     fdst,
     callback: Callable[[int, int], None],
-    length: int = shutil.COPY_BUFSIZE,
+    length: int = COPY_BUFSIZE,
 ):
     """
     COPY of :func:`shutil.copyfileobj` with added callback.
@@ -125,7 +128,7 @@ def _copyfile(
     src_file: Path,
     target_file: Path,
     callback: Optional[Callable[[int, int, int], None]] = None,
-    chunk_size: int = shutil.COPY_BUFSIZE,
+    chunk_size: int = COPY_BUFSIZE,
 ) -> Path:
     """
     A modified copy of :func:`shutil.copyfile`
@@ -184,7 +187,7 @@ def copyfile(
     src_file: Path,
     target_path: Path,
     callback: Optional[Callable[[int, int, int], None]] = None,
-    chunk_size: int = shutil.COPY_BUFSIZE,
+    chunk_size: int = COPY_BUFSIZE,
     use_cache: bool = False,
 ) -> Path:
     """
