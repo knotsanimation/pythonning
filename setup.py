@@ -35,6 +35,8 @@ setup(
         "Intended Audience :: Developers",
         "Topic :: Software Development :: Build Tools",
         "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: 3 :: Only",
@@ -43,7 +45,7 @@ setup(
     package_dir={"": "python"},  # Optional
     packages=find_packages(where="python"),  # Required
     # https://packaging.python.org/guides/distributing-packages-using-setuptools/#python-requires
-    python_requires=">=3.9",
+    python_requires=">=3.7",
     # https://packaging.python.org/discussions/install-requires-vs-requirements/
     install_requires=[""],  # Optional
     # used via `pip install sampleproject[dev]`
