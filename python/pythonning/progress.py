@@ -1,3 +1,4 @@
+import contextlib
 import logging
 import math
 import sys
@@ -254,3 +255,70 @@ class ProgressBar:
         self._stream.flush()
 
         self._update_number += 1
+
+
+class DownloadProgressBar(ProgressBar):
+    """
+    A progress bar for downloads, expressed in MB units.
+
+    Recommended usage with :any:`pythonning.web.download.download_file`.
+
+    Note the ``prefix`` and ``suffix`` argument are already consumed.
+    """
+
+    byte_to_MB = 9.5367e-7
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(
+            prefix="downloading",
+            suffix="[{bar_index:<2.1f}MB/{bar_max:.1f}MB] elapsed {elapsed_time:.2f}s",
+            *args,
+            **kwargs,
+        )
+
+    def show_progress(self, block_number, block_size, total_size):
+        """
+        To be used as callback during a download operation.
+
+        Args:
+            block_number: current block being downloaded, variable over time.
+            block_size: size of each download block, static over time.
+            total_size:
+                total size of all the block to download, static over time.
+                might not be provided which correspond to a value < 1.
+        """
+        if total_size < 1:
+            self.update()
+        else:
+            downloaded = block_number * block_size
+            self.set_progress(
+                total_progress=downloaded * self.byte_to_MB,
+                new_maximum=total_size * self.byte_to_MB,
+            )
+
+
+@contextlib.contextmanager
+def catch_download_progress(**kwargs):
+    """
+    A context manager to display a Download progress bar and handle its cleaning.
+
+    Make sure any stdout call (print, loggers) are done after the context manager has exit.
+
+    Example::
+
+        print("starting download")
+        with catch_progress() as progressbar:
+            download_file(step_callback=progressbar.show_progress)
+        print("downloading finished")
+
+    Args:
+        kwargs:
+            kwargs passed to DownloadProgressBar
+            (``prefix`` and ``suffix`` are already consumed).
+    """
+    progress_bar = DownloadProgressBar(**kwargs)
+    progress_bar.start()
+    try:
+        yield progress_bar
+    finally:
+        progress_bar.end()

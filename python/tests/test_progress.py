@@ -2,6 +2,7 @@ import logging
 import time
 
 from pythonning.progress import ProgressBar
+from pythonning.progress import catch_download_progress
 
 LOGGER = logging.getLogger(__name__)
 
@@ -34,3 +35,11 @@ def test_progress_bar():
 
     p.end()
     print("progress bar test finished !")
+
+
+def test__catch_download_progress():
+    with catch_download_progress() as progress_bar:
+        for x in range(100):
+            time.sleep(0.001)
+            progress_bar.add_progress(1, 100)
+    assert progress_bar._user_index == 100
