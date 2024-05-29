@@ -81,6 +81,7 @@ Contents
    Home <self>
    public-api
    developing
+   changelog
 
 
 Indices and tables
