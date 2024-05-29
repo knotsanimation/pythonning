@@ -17,7 +17,7 @@ long_description = (THISDIR / "README.md").read_text(encoding="utf-8")
 
 setup(
     name="pythonning",
-    version="1.7.0",
+    version="1.8.0",
     description="Low-level python functions commonly used by any kind of developer.",  # Optional
     long_description=long_description,  # Optional
     long_description_content_type="text/markdown",  # Optional
