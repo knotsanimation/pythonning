@@ -1,6 +1,10 @@
 Public API
 ==========
 
+.. code-block:: python
+
+   import pythonning
+
 .. toctree::
     :maxdepth: 2
 

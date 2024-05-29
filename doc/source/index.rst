@@ -9,13 +9,17 @@ pythonning
 ``pythonning`` is a low-level module providing convenient functions and components
 when working with python.
 
-**intentions**
+design
+------
 
-The intention is that you could share this module with anyone
+The intention for that module is to be shared with anyone
 that have **just python** installed and it will work. Anyone meaning
 a friend, a data-sciencist, a random internet-people, ...
 
-**prerequisites**
+prerequisites
+-------------
+
+pythonning is compatible with ``python>=3.7`` which is its only requirement.
 
 It is possible some functions have implicit requirements, meaning they except
 some software to be on the machine of the user to work. But implicit means
@@ -28,14 +32,55 @@ git installed.
 Keep in mind that even if a requirement is implicit for a piece of code,
 we might have other better-suited package to store that code.
 
+installation
+------------
+
+with pip
+________
+
+install from `main` branch :
+
+.. code-block:: shell
+
+   pip install git+https://github.com/knotanimations/pythonning.git@main
+
+
+or you can
+
+.. code-block:: shell
+
+   git clone https://github.com/knotanimations/pythonning.git
+   cd pythonning
+   pip install .
+
+manual
+______
+
+.. code-block:: shell
+
+   git clone https://github.com/knotanimations/pythonning.git
+   export PYTHONPATH=$PYTHONPATH:$cwd/pythonning
+   python -c "import pythonning;print(pythonning.__version__)"
+
+
+usage
+-----
+
+.. code-block:: python
+
+   import pythonning
+   print(pythonning.__version__)
+
+
 Contents
 --------
 
 .. toctree::
    :maxdepth: 2
 
-   developing
+   Home <self>
    public-api
+   developing
 
 
 Indices and tables

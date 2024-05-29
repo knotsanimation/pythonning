@@ -1,5 +1,8 @@
 # pythonning
 
+![Made with Python](https://img.shields.io/badge/Python->=3.7-blue?logo=python&logoColor=white)
+[![documentation](https://img.shields.io/badge/visit_documentation-blue)](https://knotsanimation.github.io/pythonning/)
+
 low-level python library providing convenient functions and components for working with
 python. 
 
@@ -9,25 +12,19 @@ a friend, a data-sciencist, a random internet-people.
 
 This imply this package CAN'T have any external dependencies.
 
-# prerequisites
+## prerequisites
 
-- python 3.9+
+- python 3.7+
 - this is a [rez](https://github.com/AcademySoftwareFoundation/rez) package made to
-work in the context of a rez infrastructure. But as mentioned the actualy library
-doesn't need rez to work.
-- documentation need `git` to be deployed
+work in the context of a rez infrastructure. But as mentioned **the actualy library
+doesn't need rez to work.**
 
-# install
+## documentation
 
-## with pip
+All installation and usage instructions are found at:
 
-install from `main` branch :
+> https://knotsanimation.github.io/pythonning/
 
-```shell
-pip install git+https://github.com/knotanimations/pythonning.git@main
-```
+## developing
 
-
-# documentation
-
-https://knotsanimation.github.io/pythonning/
+Development instructions are in the static documentation: [developing.rst](./doc/source/developing.rst)
