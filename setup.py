@@ -51,7 +51,13 @@ setup(
     # used via `pip install sampleproject[dev]`
     extras_require={  # Optional
         "dev": ["black"],
-        "test": ["pytest"],
+        "test": [
+            "pytest>=7",
+        ],
+        "doc": [
+            "sphinx==7.2.*",
+            "furo==2023.9.*",
+        ],
     },
     # https://packaging.python.org/specifications/core-metadata/#project-url-multiple-use
     project_urls={  # Optional

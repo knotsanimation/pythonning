@@ -11,11 +11,11 @@ description = "Low-level python functions commonly used by any kind of developer
 uuid = "446add5adac048399303292b90c32c59"
 
 requires = [
-    "python-3+",
+    "python-3.7+",
 ]
 
 private_build_requires = [
-    "python-3+",
+    "python-3.7+",
 ]
 
 build_command = "python {root}/build.py"
@@ -24,8 +24,8 @@ doc_publish_command = "python {root}/doc/publish-doc.py"
 
 doc_publish_requires = [
     "python-3+",
-    "sphinx",
-    "furo",
+    "sphinx-7.2",
+    "furo-2023.9",
 ]
 
 __test_command_base = (
@@ -37,15 +37,15 @@ __test_command_base = (
 tests = {
     "unit-37": {
         "command": __test_command_base,
-        "requires": ["python-3.7", "pytest", "pytest_utils"],
+        "requires": ["python-3.7", "pytest-7+", "pytest_utils"],
     },
     "unit-39": {
         "command": __test_command_base,
-        "requires": ["python-3.9", "pytest", "pytest_utils"],
+        "requires": ["python-3.9", "pytest-7+", "pytest_utils"],
     },
     "unit-310": {
         "command": __test_command_base,
-        "requires": ["python-3.10", "pytest", "pytest_utils"],
+        "requires": ["python-3.10", "pytest-7+", "pytest_utils"],
     },
 }
 
