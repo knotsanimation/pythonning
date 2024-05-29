@@ -3,10 +3,10 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Public API" href="public-api.html" /><link rel="prev" title="pythonning" href="index.html" />
+<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Changelog" href="changelog.html" /><link rel="prev" title="download" href="public-api/web/download.html" />
 
     <!-- Generated with Sphinx 7.2.6 and Furo 2023.09.10 -->
-        <title>Developing - pythonning documentation</title>
+        <title>Developing - pythonning 1.7.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=135e06be" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=36a5483c" />
@@ -123,7 +123,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="index.html"><div class="brand">pythonning  documentation</div></a>
+      <a href="index.html"><div class="brand">pythonning 1.7.0 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -146,7 +146,7 @@
       <div class="sidebar-sticky"><a class="sidebar-brand" href="index.html">
   
   
-  <span class="sidebar-brand-text">pythonning  documentation</span>
+  <span class="sidebar-brand-text">pythonning 1.7.0 documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -155,7 +155,7 @@
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <ul class="current">
-<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Developing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html">Home</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="public-api.html">Public API</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Public API</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="public-api/caching.html">caching</a></li>
 <li class="toctree-l2"><a class="reference internal" href="public-api/filesystem.html">filesystem</a></li>
@@ -168,6 +168,8 @@
 </li>
 </ul>
 </li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Developing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
 </ul>
 
 </div>
@@ -205,26 +207,35 @@
           <section id="developing">
 <h1>Developing<a class="headerlink" href="#developing" title="Link to this heading">#</a></h1>
 <p>Documentation for maintaining the repository.</p>
-<section id="tests">
-<h2>tests<a class="headerlink" href="#tests" title="Link to this heading">#</a></h2>
-<p><strong>Running tests</strong></p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>.
+<section id="running-tests">
+<h2>running tests<a class="headerlink" href="#running-tests" title="Link to this heading">#</a></h2>
+<section id="with-rez">
+<h3>with rez<a class="headerlink" href="#with-rez" title="Link to this heading">#</a></h3>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span><span class="o">{</span>repo-root<span class="o">}</span>
 <span class="c1"># ensure package is build first</span>
 rez-build<span class="w"> </span>-i
 
 rez-test<span class="w"> </span>pythonning
 </pre></div>
 </div>
-<p><strong>Running a specific tests</strong></p>
+<p>Running a specific tests:</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># only run the tests for python 3.9 defined in the package.py</span>
 rez-test<span class="w"> </span>pythonning<span class="w"> </span>unit-39
 </pre></div>
 </div>
 </section>
-<section id="documentation">
-<h2>documentation<a class="headerlink" href="#documentation" title="Link to this heading">#</a></h2>
-<p><strong>Build the documentation</strong></p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>.
+<section id="with-pip">
+<h3>with pip<a class="headerlink" href="#with-pip" title="Link to this heading">#</a></h3>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span><span class="o">{</span>repo-root<span class="o">}</span>
+pip<span class="w"> </span>install<span class="w"> </span>.<span class="o">[</span>test<span class="o">]</span>
+pytest<span class="w"> </span>./tests
+</pre></div>
+</div>
+</section>
+</section>
+<section id="building-documentation">
+<h2>building documentation<a class="headerlink" href="#building-documentation" title="Link to this heading">#</a></h2>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span><span class="o">{</span>repo-root<span class="o">}</span>
 <span class="c1"># ensure package is built first (necessary for autodoc)</span>
 rez-build<span class="w"> </span>-i
 rez<span class="w"> </span>env<span class="w"> </span>sphinx<span class="w"> </span>furo<span class="w"> </span>pythonning
@@ -237,10 +248,18 @@ python<span class="w"> </span>./doc/build-doc.py<span class="w"> </span>-a
 <p>You only need to rez-build/rez-env when you change python file of pythonning.
 You can just successively call <code class="docutils literal notranslate"><span class="pre">build-doc.py</span></code> when only the doc is modified.</p>
 </div>
-<p><strong>Publish the documentation</strong></p>
+</section>
+<section id="deploying-documentation">
+<h2>deploying documentation<a class="headerlink" href="#deploying-documentation" title="Link to this heading">#</a></h2>
 <p>Deploy the documentation to GitHub pages.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>At Knot this process is automated during rez-release and does not need
+to be executed manually.</p>
+</div>
 <p>You must:</p>
 <ul class="simple">
+<li><p>have <code class="docutils literal notranslate"><span class="pre">git</span></code> installed on your system</p></li>
 <li><p>be on main branch</p></li>
 <li><p>have no uncommited changes</p></li>
 <li><p>have pushed the branch</p></li>
@@ -260,23 +279,23 @@ python<span class="w"> </span>./doc/publish-doc.py
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="public-api.html">
+          <a class="next-page" href="changelog.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">Public API</div>
+                <div class="title">Changelog</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="index.html">
+          <a class="prev-page" href="public-api/web/download.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">Home</div>
+                <div class="title">download</div>
                 
               </div>
             </a>
@@ -311,8 +330,13 @@ python<span class="w"> </span>./doc/publish-doc.py
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">Developing</a><ul>
-<li><a class="reference internal" href="#tests">tests</a></li>
-<li><a class="reference internal" href="#documentation">documentation</a></li>
+<li><a class="reference internal" href="#running-tests">running tests</a><ul>
+<li><a class="reference internal" href="#with-rez">with rez</a></li>
+<li><a class="reference internal" href="#with-pip">with pip</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#building-documentation">building documentation</a></li>
+<li><a class="reference internal" href="#deploying-documentation">deploying documentation</a></li>
 </ul>
 </li>
 </ul>
@@ -324,7 +348,7 @@ python<span class="w"> </span>./doc/publish-doc.py
       
     </aside>
   </div>
-</div><script src="_static/documentation_options.js?v=5929fcd5"></script>
+</div><script src="_static/documentation_options.js?v=030dc6f6"></script>
     <script src="_static/doctools.js?v=888ff710"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/furo.js?v=32e29ea5"></script>

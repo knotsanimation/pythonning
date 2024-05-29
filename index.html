@@ -3,10 +3,10 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Developing" href="developing.html" />
+<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Public API" href="public-api.html" />
 
     <!-- Generated with Sphinx 7.2.6 and Furo 2023.09.10 -->
-        <title>pythonning documentation</title>
+        <title>pythonning 1.7.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=135e06be" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=36a5483c" />
@@ -123,7 +123,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="#"><div class="brand">pythonning  documentation</div></a>
+      <a href="#"><div class="brand">pythonning 1.7.0 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -146,7 +146,7 @@
       <div class="sidebar-sticky"><a class="sidebar-brand" href="#">
   
   
-  <span class="sidebar-brand-text">pythonning  documentation</span>
+  <span class="sidebar-brand-text">pythonning 1.7.0 documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -154,8 +154,8 @@
   <input type="hidden" name="area" value="default">
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
-  <ul>
-<li class="toctree-l1"><a class="reference internal" href="developing.html">Developing</a></li>
+  <ul class="current">
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Home</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="public-api.html">Public API</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Public API</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="public-api/caching.html">caching</a></li>
 <li class="toctree-l2"><a class="reference internal" href="public-api/filesystem.html">filesystem</a></li>
@@ -168,6 +168,8 @@
 </li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="developing.html">Developing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
 </ul>
 
 </div>
@@ -206,11 +208,15 @@
 <h1>pythonning<a class="headerlink" href="#pythonning" title="Link to this heading">#</a></h1>
 <p><code class="docutils literal notranslate"><span class="pre">pythonning</span></code> is a low-level module providing convenient functions and components
 when working with python.</p>
-<p><strong>intentions</strong></p>
-<p>The intention is that you could share this module with anyone
+<section id="design">
+<h2>design<a class="headerlink" href="#design" title="Link to this heading">#</a></h2>
+<p>The intention for that module is to be shared with anyone
 that have <strong>just python</strong> installed and it will work. Anyone meaning
 a friend, a data-sciencist, a random internet-people, …</p>
-<p><strong>prerequisites</strong></p>
+</section>
+<section id="prerequisites">
+<h2>prerequisites<a class="headerlink" href="#prerequisites" title="Link to this heading">#</a></h2>
+<p>pythonning is compatible with <code class="docutils literal notranslate"><span class="pre">python&gt;=3.7</span></code> which is its only requirement.</p>
 <p>It is possible some functions have implicit requirements, meaning they except
 some software to be on the machine of the user to work. But implicit means
 that it doesn’t prevent to import the library and use other functions.</p>
@@ -219,15 +225,43 @@ git on your system, but you can still call the function even if you don’t have
 git installed.</p>
 <p>Keep in mind that even if a requirement is implicit for a piece of code,
 we might have other better-suited package to store that code.</p>
+</section>
+<section id="installation">
+<h2>installation<a class="headerlink" href="#installation" title="Link to this heading">#</a></h2>
+<section id="with-pip">
+<h3>with pip<a class="headerlink" href="#with-pip" title="Link to this heading">#</a></h3>
+<p>install from <cite>main</cite> branch :</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>git+https://github.com/knotanimations/pythonning.git@main
+</pre></div>
+</div>
+<p>or you can</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/knotanimations/pythonning.git
+<span class="nb">cd</span><span class="w"> </span>pythonning
+pip<span class="w"> </span>install<span class="w"> </span>.
+</pre></div>
+</div>
+</section>
+<section id="manual">
+<h3>manual<a class="headerlink" href="#manual" title="Link to this heading">#</a></h3>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/knotanimations/pythonning.git
+<span class="nb">export</span><span class="w"> </span><span class="nv">PYTHONPATH</span><span class="o">=</span><span class="nv">$PYTHONPATH</span>:<span class="nv">$cwd</span>/pythonning
+python<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;import pythonning;print(pythonning.__version__)&quot;</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="usage">
+<h2>usage<a class="headerlink" href="#usage" title="Link to this heading">#</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pythonning</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">pythonning</span><span class="o">.</span><span class="n">__version__</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
 <section id="contents">
 <h2>Contents<a class="headerlink" href="#contents" title="Link to this heading">#</a></h2>
 <div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="developing.html">Developing</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="developing.html#tests">tests</a></li>
-<li class="toctree-l2"><a class="reference internal" href="developing.html#documentation">documentation</a></li>
-</ul>
-</li>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Home</a></li>
 <li class="toctree-l1"><a class="reference internal" href="public-api.html">Public API</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="public-api/caching.html">caching</a></li>
 <li class="toctree-l2"><a class="reference internal" href="public-api/filesystem.html">filesystem</a></li>
@@ -235,6 +269,20 @@ we might have other better-suited package to store that code.</p>
 <li class="toctree-l2"><a class="reference internal" href="public-api/mathing.html">mathing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="public-api/progress.html">progress</a></li>
 <li class="toctree-l2"><a class="reference internal" href="public-api/web.html">web</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="developing.html">Developing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="developing.html#running-tests">running tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developing.html#building-documentation">building documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developing.html#deploying-documentation">deploying documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id1">[1.7.0] - 2024-05-29</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id2">[1.6.2] - 2024-05-28</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id3">[1.6.2] - 2024-05-09</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id6">[1.6.0] - 2024-01-14</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#older-releases">older releases</a></li>
 </ul>
 </li>
 </ul>
@@ -255,12 +303,12 @@ we might have other better-suited package to store that code.</p>
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="developing.html">
+          <a class="next-page" href="public-api.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">Developing</div>
+                <div class="title">Public API</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
@@ -296,6 +344,14 @@ we might have other better-suited package to store that code.</p>
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">pythonning</a><ul>
+<li><a class="reference internal" href="#design">design</a></li>
+<li><a class="reference internal" href="#prerequisites">prerequisites</a></li>
+<li><a class="reference internal" href="#installation">installation</a><ul>
+<li><a class="reference internal" href="#with-pip">with pip</a></li>
+<li><a class="reference internal" href="#manual">manual</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#usage">usage</a></li>
 <li><a class="reference internal" href="#contents">Contents</a></li>
 <li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
 </ul>
@@ -309,7 +365,7 @@ we might have other better-suited package to store that code.</p>
       
     </aside>
   </div>
-</div><script src="_static/documentation_options.js?v=5929fcd5"></script>
+</div><script src="_static/documentation_options.js?v=030dc6f6"></script>
     <script src="_static/doctools.js?v=888ff710"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/furo.js?v=32e29ea5"></script>
