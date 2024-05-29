@@ -8,6 +8,7 @@ Public API
 .. toctree::
     :maxdepth: 2
 
+    public-api/benchmark
     public-api/caching
     public-api/filesystem
     public-api/git

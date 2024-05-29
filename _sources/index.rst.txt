@@ -82,6 +82,7 @@ Contents
    public-api
    developing
    changelog
+   GitHub <https://github.com/knotsanimation/pythonning>
 
 
 Indices and tables
