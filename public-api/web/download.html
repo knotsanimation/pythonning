@@ -6,7 +6,7 @@
 <link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="Developing" href="../../developing.html" /><link rel="prev" title="web" href="../web.html" />
 
     <!-- Generated with Sphinx 7.2.6 and Furo 2023.09.10 -->
-        <title>download - pythonning 1.8.0 documentation</title>
+        <title>download - pythonning 1.9.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=135e06be" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=36a5483c" />
@@ -123,7 +123,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../index.html"><div class="brand">pythonning 1.8.0 documentation</div></a>
+      <a href="../../index.html"><div class="brand">pythonning 1.9.0 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -146,7 +146,7 @@
       <div class="sidebar-sticky"><a class="sidebar-brand" href="../../index.html">
   
   
-  <span class="sidebar-brand-text">pythonning 1.8.0 documentation</span>
+  <span class="sidebar-brand-text">pythonning 1.9.0 documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -220,6 +220,9 @@
 <dd><p>Download a single file from the web at the given url and display download progress in terminal.</p>
 <p>You can cache the result when you know that you may call this function
 multiple time for the same url.</p>
+<p><strong>Tip to download Google Drive files:</strong></p>
+<p>Extract the ID from whatever url you got and replace it in the following:
+<code class="docutils literal notranslate"><span class="pre">https://drive.usercontent.google.com/download?id=YOURID&amp;export=download&amp;authuser=0&amp;confirm=t</span></code></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -230,6 +233,103 @@ multiple time for the same url.</p>
 Arguments for the function are (block_number, block_size, total_size)</p></li>
 <li><p><strong>user_agent</strong> – change the User-Agent header to fake the browser used for the connection</p></li>
 </ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pythonning.web.download.download_file_smart">
+<span class="sig-prename descclassname"><span class="pre">pythonning.web.download.</span></span><span class="sig-name descname"><span class="pre">download_file_smart</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_cache</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step_callback</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">object</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_agent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'Mozilla/5.0'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Path</span></span></span><a class="headerlink" href="#pythonning.web.download.download_file_smart" title="Link to this definition">#</a></dt>
+<dd><p>Same as <a class="reference internal" href="#pythonning.web.download.download_file" title="pythonning.web.download.download_file"><code class="xref py py-func docutils literal notranslate"><span class="pre">download_file()</span></code></a> but the function guess the target filename from the url.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>url</strong> – url to download from, ensure it’s a file.</p></li>
+<li><p><strong>target_dir</strong> – filesytem path to an existing directory to downlaod the file to.</p></li>
+<li><p><strong>use_cache</strong> – True to use the cached downloaded file. Will create it the first time.</p></li>
+<li><p><strong>step_callback</strong> – function called everytime the download progress one step.
+Arguments for the function are (block_number, block_size, total_size)</p></li>
+<li><p><strong>user_agent</strong> – change the User-Agent header to fake the browser used for the connection</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>filesystem path of the downloaded file</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pythonning.web.download.get_url_content_type">
+<span class="sig-prename descclassname"><span class="pre">pythonning.web.download.</span></span><span class="sig-name descname"><span class="pre">get_url_content_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#pythonning.web.download.get_url_content_type" title="Link to this definition">#</a></dt>
+<dd><p>Retrieve the Content-Type the given url header response.</p>
+<p>Examples:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">image</span><span class="o">/</span><span class="n">jpeg</span>
+<span class="n">image</span><span class="o">/</span><span class="n">svg</span><span class="o">+</span><span class="n">xml</span>
+<span class="n">text</span><span class="o">/</span><span class="n">html</span><span class="p">;</span> <span class="n">charset</span><span class="o">=</span><span class="n">utf</span><span class="o">-</span><span class="mi">8</span>
+<span class="n">application</span><span class="o">/</span><span class="n">octet</span><span class="o">-</span><span class="n">stream</span>
+</pre></div>
+</div>
+<p class="rubric">References</p>
+<ul class="simple">
+<li><p>[1] <a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Type">https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Type</a></p></li>
+<li><p>[2] <a class="reference external" href="http://www.iana.org/assignments/media-types/media-types.xhtml">http://www.iana.org/assignments/media-types/media-types.xhtml</a></p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>url</strong> – a valid web url whose request should return a header</p></li>
+<li><p><strong>kwargs</strong> – passed to <code class="xref py py-func docutils literal notranslate"><span class="pre">urllib.request.urlopen()</span></code></p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pythonning.web.download.get_url_filename">
+<span class="sig-prename descclassname"><span class="pre">pythonning.web.download.</span></span><span class="sig-name descname"><span class="pre">get_url_filename</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#pythonning.web.download.get_url_filename" title="Link to this definition">#</a></dt>
+<dd><p>Retrieve the filename from the given url header response.</p>
+<p>Not all urls might define a filename in their header and the function will raise
+in that case.</p>
+<p class="rubric">References</p>
+<ul class="simple">
+<li><p>[1] <a class="reference external" href="https://stackoverflow.com/a/49733575/13806195">https://stackoverflow.com/a/49733575/13806195</a></p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>url</strong> – a valid web url whose request should return a header</p></li>
+<li><p><strong>kwargs</strong> – passed to <code class="xref py py-func docutils literal notranslate"><span class="pre">urllib.request.urlopen()</span></code></p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pythonning.web.download.guess_url_filename">
+<span class="sig-prename descclassname"><span class="pre">pythonning.web.download.</span></span><span class="sig-name descname"><span class="pre">guess_url_filename</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#pythonning.web.download.guess_url_filename" title="Link to this definition">#</a></dt>
+<dd><p>Try to find the most plausible filename from the given filename.</p>
+<p>We try in the order:</p>
+<ol class="arabic simple">
+<li><p>find it from the header’s Content-Disposition filename attribute.</p></li>
+<li><p>extract a filename from the url string last component</p>
+<ul class="simple">
+<li><p>if the filename doesn’t have a file extension, try to guess it from the
+header’s Content-Type attribute</p></li>
+</ul>
+</li>
+</ol>
+<p>If you know both of this method would fail, you can at least try to get the
+file extension with <a class="reference internal" href="#pythonning.web.download.get_url_content_type" title="pythonning.web.download.get_url_content_type"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_url_content_type()</span></code></a></p>
+<p>The returned output robustness widly depends on the url you gave.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>url</strong> – a valid web url</p></li>
+<li><p><strong>kwargs</strong> – passed to <code class="xref py py-func docutils literal notranslate"><span class="pre">urllib.request.urlopen()</span></code></p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>a file name that may not have a file extension</p>
 </dd>
 </dl>
 </dd></dl>
@@ -294,6 +394,10 @@ Arguments for the function are (block_number, block_size, total_size)</p></li>
 <li><a class="reference internal" href="#">download</a><ul>
 <li><a class="reference internal" href="#pythonning.web.download.clear_download_cache"><code class="docutils literal notranslate"><span class="pre">clear_download_cache()</span></code></a></li>
 <li><a class="reference internal" href="#pythonning.web.download.download_file"><code class="docutils literal notranslate"><span class="pre">download_file()</span></code></a></li>
+<li><a class="reference internal" href="#pythonning.web.download.download_file_smart"><code class="docutils literal notranslate"><span class="pre">download_file_smart()</span></code></a></li>
+<li><a class="reference internal" href="#pythonning.web.download.get_url_content_type"><code class="docutils literal notranslate"><span class="pre">get_url_content_type()</span></code></a></li>
+<li><a class="reference internal" href="#pythonning.web.download.get_url_filename"><code class="docutils literal notranslate"><span class="pre">get_url_filename()</span></code></a></li>
+<li><a class="reference internal" href="#pythonning.web.download.guess_url_filename"><code class="docutils literal notranslate"><span class="pre">guess_url_filename()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -305,7 +409,7 @@ Arguments for the function are (block_number, block_size, total_size)</p></li>
       
     </aside>
   </div>
-</div><script src="../../_static/documentation_options.js?v=b51e6972"></script>
+</div><script src="../../_static/documentation_options.js?v=c4cb232b"></script>
     <script src="../../_static/doctools.js?v=888ff710"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/scripts/furo.js?v=32e29ea5"></script>
