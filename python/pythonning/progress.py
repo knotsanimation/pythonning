@@ -206,7 +206,7 @@ class ProgressBar:
         Add or remove a special character that make the stream cursor visible or not.
         """
         if visible and not self._is_cursor_visible:
-            print("\x1b[?25n", end="", file=self._stream)
+            print("\x1b[?25h", end="", file=self._stream)
             self._is_cursor_visible = True
         elif not visible and self._is_cursor_visible:
             print("\x1b[?25l", end="", file=self._stream)
