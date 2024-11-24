@@ -17,3 +17,4 @@ COMMAND = [
 COMMAND += sys.argv[1:]
 
 subprocess.check_call(COMMAND, cwd=THISDIR)
+print(f"doc can be found at 'file:///{BUILDIR.as_posix()}/html/index.html'")
