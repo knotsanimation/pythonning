@@ -1,0 +1,702 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="mathing" href="mathing.html" /><link rel="prev" title="git" href="git.html" />
+
+    <!-- Generated with Sphinx 7.2.6 and Furo 2023.09.10 -->
+        <title>logginging - pythonning 1.11.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=36a5483c" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">pythonning 1.11.0 documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
+  
+  
+  <span class="sidebar-brand-text">pythonning 1.11.0 documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Home</a></li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="../public-api.html">Public API</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Public API</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="benchmark.html">benchmark</a></li>
+<li class="toctree-l2"><a class="reference internal" href="caching.html">caching</a></li>
+<li class="toctree-l2"><a class="reference internal" href="filesystem.html">filesystem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="git.html">git</a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">logginging</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mathing.html">mathing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="progress.html">progress</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="web.html">web</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of web</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="web/download.html">download</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../developing.html">Developing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/knotsanimation/pythonning">GitHub</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          <section id="module-pythonning.logginging">
+<span id="logginging"></span><h1>logginging<a class="headerlink" href="#module-pythonning.logginging" title="Link to this heading">#</a></h1>
+<p>Utilities for native python logging module.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="pythonning.logginging.ColoredFormatter">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pythonning.logginging.</span></span><span class="sig-name descname"><span class="pre">ColoredFormatter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">disable_coloring</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pythonning.logginging.ColoredFormatter" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Formatter</span></code></p>
+<p>A custom logging formatter which add colors to messages based on their level.</p>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">log_format</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{level_color}{levelname: &lt;7}{black_bold}</span><span class="s2"> | </span><span class="si">{asctime}</span><span class="s2"> [</span><span class="si">{name}</span><span class="s2">]</span><span class="si">{reset}</span><span class="s2"> </span><span class="si">{level_color}{message}</span><span class="s2">&quot;</span>
+<span class="n">log_formatter</span> <span class="o">=</span> <span class="n">ColoredFormatter</span><span class="p">(</span><span class="n">fmt</span><span class="o">=</span><span class="n">log_format</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s2">&quot;{&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>You can also add individual color inline messages using the following syntax:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">LOGGER</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;hey </span><span class="si">{blue}</span><span class="s2">this is blue</span><span class="si">{reset}</span><span class="s2"> !&quot;</span><span class="p">,</span> <span class="n">extra</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;resolve_color&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">})</span>
+</pre></div>
+</div>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pythonning.logginging.ColoredFormatter.COLOR_BY_LEVEL">
+<span class="sig-name descname"><span class="pre">COLOR_BY_LEVEL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{10:</span> <span class="pre">LogColor.white_faint,</span> <span class="pre">20:</span> <span class="pre">LogColor.blue,</span> <span class="pre">30:</span> <span class="pre">LogColor.yellow,</span> <span class="pre">40:</span> <span class="pre">LogColor.red,</span> <span class="pre">50:</span> <span class="pre">LogColor.red_bold}</span></em><a class="headerlink" href="#pythonning.logginging.ColoredFormatter.COLOR_BY_LEVEL" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pythonning.logginging.ColoredFormatter.COLOR_MAPPING">
+<span class="sig-name descname"><span class="pre">COLOR_MAPPING</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'black':</span> <span class="pre">'\x1b[30m',</span> <span class="pre">'black_bold':</span> <span class="pre">'\x1b[30;1m',</span> <span class="pre">'black_faint':</span> <span class="pre">'\x1b[30;2m',</span> <span class="pre">'blue':</span> <span class="pre">'\x1b[34m',</span> <span class="pre">'blue_bold':</span> <span class="pre">'\x1b[34;1m',</span> <span class="pre">'blue_faint':</span> <span class="pre">'\x1b[34;2m',</span> <span class="pre">'cyan':</span> <span class="pre">'\x1b[36m',</span> <span class="pre">'cyan_bold':</span> <span class="pre">'\x1b[36;1m',</span> <span class="pre">'cyan_faint':</span> <span class="pre">'\x1b[36;2m',</span> <span class="pre">'green':</span> <span class="pre">'\x1b[32m',</span> <span class="pre">'green_bold':</span> <span class="pre">'\x1b[32;1m',</span> <span class="pre">'green_faint':</span> <span class="pre">'\x1b[32;2m',</span> <span class="pre">'grey':</span> <span class="pre">'\x1b[39m',</span> <span class="pre">'magenta':</span> <span class="pre">'\x1b[35m',</span> <span class="pre">'magenta_bold':</span> <span class="pre">'\x1b[35;1m',</span> <span class="pre">'magenta_faint':</span> <span class="pre">'\x1b[35;2m',</span> <span class="pre">'red':</span> <span class="pre">'\x1b[31m',</span> <span class="pre">'red_bold':</span> <span class="pre">'\x1b[31;1m',</span> <span class="pre">'red_faint':</span> <span class="pre">'\x1b[31;2m',</span> <span class="pre">'reset':</span> <span class="pre">'\x1b[0m',</span> <span class="pre">'white':</span> <span class="pre">'\x1b[37m',</span> <span class="pre">'white_bold':</span> <span class="pre">'\x1b[37;1m',</span> <span class="pre">'white_faint':</span> <span class="pre">'\x1b[37;2m',</span> <span class="pre">'yellow':</span> <span class="pre">'\x1b[33m',</span> <span class="pre">'yellow_bold':</span> <span class="pre">'\x1b[33;1m',</span> <span class="pre">'yellow_faint':</span> <span class="pre">'\x1b[33;2m'}</span></em><a class="headerlink" href="#pythonning.logginging.ColoredFormatter.COLOR_MAPPING" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pythonning.logginging.ColoredFormatter.DefaultDict">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DefaultDict</span></span><a class="headerlink" href="#pythonning.logginging.ColoredFormatter.DefaultDict" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="pythonning.logginging.ColoredFormatter.DefaultDict.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pythonning.logginging.ColoredFormatter.DefaultDict.__init__" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pythonning.logginging.ColoredFormatter.DefaultDict.__repr__">
+<span class="sig-name descname"><span class="pre">__repr__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pythonning.logginging.ColoredFormatter.DefaultDict.__repr__" title="Link to this definition">#</a></dt>
+<dd><p>Return repr(self).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pythonning.logginging.ColoredFormatter.DefaultDict.clear">
+<span class="sig-name descname"><span class="pre">clear</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None.</span>&#160; <span class="pre">Remove</span> <span class="pre">all</span> <span class="pre">items</span> <span class="pre">from</span> <span class="pre">D.</span></span></span><a class="headerlink" href="#pythonning.logginging.ColoredFormatter.DefaultDict.clear" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pythonning.logginging.ColoredFormatter.DefaultDict.copy">
+<span class="sig-name descname"><span class="pre">copy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">a</span> <span class="pre">shallow</span> <span class="pre">copy</span> <span class="pre">of</span> <span class="pre">D</span></span></span><a class="headerlink" href="#pythonning.logginging.ColoredFormatter.DefaultDict.copy" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pythonning.logginging.ColoredFormatter.DefaultDict.fromkeys">
+<span class="sig-name descname"><span class="pre">fromkeys</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pythonning.logginging.ColoredFormatter.DefaultDict.fromkeys" title="Link to this definition">#</a></dt>
+<dd><p>Create a new dictionary with keys from iterable and values set to value.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pythonning.logginging.ColoredFormatter.DefaultDict.get">
+<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pythonning.logginging.ColoredFormatter.DefaultDict.get" title="Link to this definition">#</a></dt>
+<dd><p>Return the value for key if key is in the dictionary, else default.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pythonning.logginging.ColoredFormatter.DefaultDict.items">
+<span class="sig-name descname"><span class="pre">items</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">a</span> <span class="pre">set-like</span> <span class="pre">object</span> <span class="pre">providing</span> <span class="pre">a</span> <span class="pre">view</span> <span class="pre">on</span> <span class="pre">D's</span> <span class="pre">items</span></span></span><a class="headerlink" href="#pythonning.logginging.ColoredFormatter.DefaultDict.items" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pythonning.logginging.ColoredFormatter.DefaultDict.keys">
+<span class="sig-name descname"><span class="pre">keys</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">a</span> <span class="pre">set-like</span> <span class="pre">object</span> <span class="pre">providing</span> <span class="pre">a</span> <span class="pre">view</span> <span class="pre">on</span> <span class="pre">D's</span> <span class="pre">keys</span></span></span><a class="headerlink" href="#pythonning.logginging.ColoredFormatter.DefaultDict.keys" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pythonning.logginging.ColoredFormatter.DefaultDict.pop">
+<span class="sig-name descname"><span class="pre">pop</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">k</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">d</span></span></em><span class="optional">]</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">v,</span> <span class="pre">remove</span> <span class="pre">specified</span> <span class="pre">key</span> <span class="pre">and</span> <span class="pre">return</span> <span class="pre">the</span> <span class="pre">corresponding</span> <span class="pre">value.</span></span></span><a class="headerlink" href="#pythonning.logginging.ColoredFormatter.DefaultDict.pop" title="Link to this definition">#</a></dt>
+<dd><p>If the key is not found, return the default if given; otherwise,
+raise a KeyError.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pythonning.logginging.ColoredFormatter.DefaultDict.popitem">
+<span class="sig-name descname"><span class="pre">popitem</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pythonning.logginging.ColoredFormatter.DefaultDict.popitem" title="Link to this definition">#</a></dt>
+<dd><p>Remove and return a (key, value) pair as a 2-tuple.</p>
+<p>Pairs are returned in LIFO (last-in, first-out) order.
+Raises KeyError if the dict is empty.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pythonning.logginging.ColoredFormatter.DefaultDict.setdefault">
+<span class="sig-name descname"><span class="pre">setdefault</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pythonning.logginging.ColoredFormatter.DefaultDict.setdefault" title="Link to this definition">#</a></dt>
+<dd><p>Insert key with a value of default if key is not in the dictionary.</p>
+<p>Return the value for key if key is in the dictionary, else default.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pythonning.logginging.ColoredFormatter.DefaultDict.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="n"><span class="pre">E</span></span></em>, <span class="optional">]</span><em class="sig-param"><span class="n"><span class="pre">**F</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None.</span>&#160; <span class="pre">Update</span> <span class="pre">D</span> <span class="pre">from</span> <span class="pre">dict/iterable</span> <span class="pre">E</span> <span class="pre">and</span> <span class="pre">F.</span></span></span><a class="headerlink" href="#pythonning.logginging.ColoredFormatter.DefaultDict.update" title="Link to this definition">#</a></dt>
+<dd><p>If E is present and has a .keys() method, then does:  for k in E: D[k] = E[k]
+If E is present and lacks a .keys() method, then does:  for k, v in E: D[k] = v
+In either case, this is followed by: for k in F:  D[k] = F[k]</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pythonning.logginging.ColoredFormatter.DefaultDict.values">
+<span class="sig-name descname"><span class="pre">values</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">an</span> <span class="pre">object</span> <span class="pre">providing</span> <span class="pre">a</span> <span class="pre">view</span> <span class="pre">on</span> <span class="pre">D's</span> <span class="pre">values</span></span></span><a class="headerlink" href="#pythonning.logginging.ColoredFormatter.DefaultDict.values" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pythonning.logginging.ColoredFormatter.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">disable_coloring</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pythonning.logginging.ColoredFormatter.__init__" title="Link to this definition">#</a></dt>
+<dd><p>Initialize the formatter with specified format strings.</p>
+<p>Initialize the formatter either with the specified format string, or a
+default as described above. Allow for specialized date formatting with
+the optional datefmt argument. If datefmt is omitted, you get an
+ISO8601-like (or RFC 3339-like) format.</p>
+<p>Use a style parameter of ‘%’, ‘{’ or ‘$’ to specify that you want to
+use one of %-formatting, <code class="xref py py-meth docutils literal notranslate"><span class="pre">str.format()</span></code> (<code class="docutils literal notranslate"><span class="pre">{}</span></code>) formatting or
+<code class="xref py py-class docutils literal notranslate"><span class="pre">string.Template</span></code> formatting in your format string.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 3.2: </span>Added the <code class="docutils literal notranslate"><span class="pre">style</span></code> parameter.</p>
+</div>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pythonning.logginging.ColoredFormatter.colors">
+<span class="sig-name descname"><span class="pre">colors</span></span><a class="headerlink" href="#pythonning.logginging.ColoredFormatter.colors" title="Link to this definition">#</a></dt>
+<dd><p>alias of <a class="reference internal" href="#pythonning.logginging.LogColor" title="pythonning.logginging.LogColor"><code class="xref py py-class docutils literal notranslate"><span class="pre">LogColor</span></code></a></p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pythonning.logginging.ColoredFormatter.converter">
+<span class="sig-name descname"><span class="pre">converter</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pythonning.logginging.ColoredFormatter.converter" title="Link to this definition">#</a></dt>
+<dd><dl class="simple">
+<dt>localtime([seconds]) -&gt; (tm_year,tm_mon,tm_mday,tm_hour,tm_min,</dt><dd><p>tm_sec,tm_wday,tm_yday,tm_isdst)</p>
+</dd>
+</dl>
+<p>Convert seconds since the Epoch to a time tuple expressing local time.
+When ‘seconds’ is not passed in, convert the current time instead.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pythonning.logginging.ColoredFormatter.default_msec_format">
+<span class="sig-name descname"><span class="pre">default_msec_format</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'%s,%03d'</span></em><a class="headerlink" href="#pythonning.logginging.ColoredFormatter.default_msec_format" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pythonning.logginging.ColoredFormatter.default_time_format">
+<span class="sig-name descname"><span class="pre">default_time_format</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'%Y-%m-%d</span> <span class="pre">%H:%M:%S'</span></em><a class="headerlink" href="#pythonning.logginging.ColoredFormatter.default_time_format" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pythonning.logginging.ColoredFormatter.format">
+<span class="sig-name descname"><span class="pre">format</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">record</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pythonning.logginging.ColoredFormatter.format" title="Link to this definition">#</a></dt>
+<dd><p>Format the specified record as text.</p>
+<p>The record’s attribute dictionary is used as the operand to a
+string formatting operation which yields the returned string.
+Before formatting the dictionary, a couple of preparatory steps
+are carried out. The message attribute of the record is computed
+using LogRecord.getMessage(). If the formatting string uses the
+time (as determined by a call to usesTime(), formatTime() is
+called to format the event time. If there is exception information,
+it is formatted using formatException() and appended to the message.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pythonning.logginging.ColoredFormatter.formatException">
+<span class="sig-name descname"><span class="pre">formatException</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ei</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pythonning.logginging.ColoredFormatter.formatException" title="Link to this definition">#</a></dt>
+<dd><p>Format and return the specified exception information as a string.</p>
+<p>This default implementation just uses
+traceback.print_exception()</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pythonning.logginging.ColoredFormatter.formatMessage">
+<span class="sig-name descname"><span class="pre">formatMessage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">record</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pythonning.logginging.ColoredFormatter.formatMessage" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pythonning.logginging.ColoredFormatter.formatStack">
+<span class="sig-name descname"><span class="pre">formatStack</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stack_info</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pythonning.logginging.ColoredFormatter.formatStack" title="Link to this definition">#</a></dt>
+<dd><p>This method is provided as an extension point for specialized
+formatting of stack information.</p>
+<p>The input data is a string as returned from a call to
+<code class="xref py py-func docutils literal notranslate"><span class="pre">traceback.print_stack()</span></code>, but with the last trailing newline
+removed.</p>
+<p>The base implementation just returns the value passed in.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pythonning.logginging.ColoredFormatter.formatTime">
+<span class="sig-name descname"><span class="pre">formatTime</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">record</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">datefmt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pythonning.logginging.ColoredFormatter.formatTime" title="Link to this definition">#</a></dt>
+<dd><p>Return the creation time of the specified LogRecord as formatted text.</p>
+<p>This method should be called from format() by a formatter which
+wants to make use of a formatted time. This method can be overridden
+in formatters to provide for any specific requirement, but the
+basic behaviour is as follows: if datefmt (a string) is specified,
+it is used with time.strftime() to format the creation time of the
+record. Otherwise, an ISO8601-like (or RFC 3339-like) format is used.
+The resulting string is returned. This function uses a user-configurable
+function to convert the creation time to a tuple. By default,
+time.localtime() is used; to change this for a particular formatter
+instance, set the ‘converter’ attribute to a function with the same
+signature as time.localtime() or time.gmtime(). To change it for all
+formatters, for example if you want all logging times to be shown in GMT,
+set the ‘converter’ attribute in the Formatter class.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pythonning.logginging.ColoredFormatter.usesTime">
+<span class="sig-name descname"><span class="pre">usesTime</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pythonning.logginging.ColoredFormatter.usesTime" title="Link to this definition">#</a></dt>
+<dd><p>Check if the format uses the creation time of the record.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pythonning.logginging.LogColor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pythonning.logginging.</span></span><span class="sig-name descname"><span class="pre">LogColor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pythonning.logginging.LogColor" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></p>
+<p>Collection of ANSI escape code matching a color.</p>
+<p>Reference: <a class="reference external" href="https://stackoverflow.com/a/28938235/13806195">https://stackoverflow.com/a/28938235/13806195</a></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pythonning.logginging.LogColor.black">
+<span class="sig-name descname"><span class="pre">black</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'\x1b[30m'</span></em><a class="headerlink" href="#pythonning.logginging.LogColor.black" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pythonning.logginging.LogColor.black_bold">
+<span class="sig-name descname"><span class="pre">black_bold</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'\x1b[30;1m'</span></em><a class="headerlink" href="#pythonning.logginging.LogColor.black_bold" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pythonning.logginging.LogColor.black_faint">
+<span class="sig-name descname"><span class="pre">black_faint</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'\x1b[30;2m'</span></em><a class="headerlink" href="#pythonning.logginging.LogColor.black_faint" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pythonning.logginging.LogColor.blue">
+<span class="sig-name descname"><span class="pre">blue</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'\x1b[34m'</span></em><a class="headerlink" href="#pythonning.logginging.LogColor.blue" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pythonning.logginging.LogColor.blue_bold">
+<span class="sig-name descname"><span class="pre">blue_bold</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'\x1b[34;1m'</span></em><a class="headerlink" href="#pythonning.logginging.LogColor.blue_bold" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pythonning.logginging.LogColor.blue_faint">
+<span class="sig-name descname"><span class="pre">blue_faint</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'\x1b[34;2m'</span></em><a class="headerlink" href="#pythonning.logginging.LogColor.blue_faint" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pythonning.logginging.LogColor.cyan">
+<span class="sig-name descname"><span class="pre">cyan</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'\x1b[36m'</span></em><a class="headerlink" href="#pythonning.logginging.LogColor.cyan" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pythonning.logginging.LogColor.cyan_bold">
+<span class="sig-name descname"><span class="pre">cyan_bold</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'\x1b[36;1m'</span></em><a class="headerlink" href="#pythonning.logginging.LogColor.cyan_bold" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pythonning.logginging.LogColor.cyan_faint">
+<span class="sig-name descname"><span class="pre">cyan_faint</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'\x1b[36;2m'</span></em><a class="headerlink" href="#pythonning.logginging.LogColor.cyan_faint" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pythonning.logginging.LogColor.green">
+<span class="sig-name descname"><span class="pre">green</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'\x1b[32m'</span></em><a class="headerlink" href="#pythonning.logginging.LogColor.green" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pythonning.logginging.LogColor.green_bold">
+<span class="sig-name descname"><span class="pre">green_bold</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'\x1b[32;1m'</span></em><a class="headerlink" href="#pythonning.logginging.LogColor.green_bold" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pythonning.logginging.LogColor.green_faint">
+<span class="sig-name descname"><span class="pre">green_faint</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'\x1b[32;2m'</span></em><a class="headerlink" href="#pythonning.logginging.LogColor.green_faint" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pythonning.logginging.LogColor.grey">
+<span class="sig-name descname"><span class="pre">grey</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'\x1b[39m'</span></em><a class="headerlink" href="#pythonning.logginging.LogColor.grey" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pythonning.logginging.LogColor.magenta">
+<span class="sig-name descname"><span class="pre">magenta</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'\x1b[35m'</span></em><a class="headerlink" href="#pythonning.logginging.LogColor.magenta" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pythonning.logginging.LogColor.magenta_bold">
+<span class="sig-name descname"><span class="pre">magenta_bold</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'\x1b[35;1m'</span></em><a class="headerlink" href="#pythonning.logginging.LogColor.magenta_bold" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pythonning.logginging.LogColor.magenta_faint">
+<span class="sig-name descname"><span class="pre">magenta_faint</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'\x1b[35;2m'</span></em><a class="headerlink" href="#pythonning.logginging.LogColor.magenta_faint" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pythonning.logginging.LogColor.red">
+<span class="sig-name descname"><span class="pre">red</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'\x1b[31m'</span></em><a class="headerlink" href="#pythonning.logginging.LogColor.red" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pythonning.logginging.LogColor.red_bold">
+<span class="sig-name descname"><span class="pre">red_bold</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'\x1b[31;1m'</span></em><a class="headerlink" href="#pythonning.logginging.LogColor.red_bold" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pythonning.logginging.LogColor.red_faint">
+<span class="sig-name descname"><span class="pre">red_faint</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'\x1b[31;2m'</span></em><a class="headerlink" href="#pythonning.logginging.LogColor.red_faint" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pythonning.logginging.LogColor.reset">
+<span class="sig-name descname"><span class="pre">reset</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'\x1b[0m'</span></em><a class="headerlink" href="#pythonning.logginging.LogColor.reset" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pythonning.logginging.LogColor.white">
+<span class="sig-name descname"><span class="pre">white</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'\x1b[37m'</span></em><a class="headerlink" href="#pythonning.logginging.LogColor.white" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pythonning.logginging.LogColor.white_bold">
+<span class="sig-name descname"><span class="pre">white_bold</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'\x1b[37;1m'</span></em><a class="headerlink" href="#pythonning.logginging.LogColor.white_bold" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pythonning.logginging.LogColor.white_faint">
+<span class="sig-name descname"><span class="pre">white_faint</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'\x1b[37;2m'</span></em><a class="headerlink" href="#pythonning.logginging.LogColor.white_faint" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pythonning.logginging.LogColor.yellow">
+<span class="sig-name descname"><span class="pre">yellow</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'\x1b[33m'</span></em><a class="headerlink" href="#pythonning.logginging.LogColor.yellow" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pythonning.logginging.LogColor.yellow_bold">
+<span class="sig-name descname"><span class="pre">yellow_bold</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'\x1b[33;1m'</span></em><a class="headerlink" href="#pythonning.logginging.LogColor.yellow_bold" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pythonning.logginging.LogColor.yellow_faint">
+<span class="sig-name descname"><span class="pre">yellow_faint</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'\x1b[33;2m'</span></em><a class="headerlink" href="#pythonning.logginging.LogColor.yellow_faint" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="mathing.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">mathing</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="git.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">git</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2024, Knots Animation
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">logginging</a><ul>
+<li><a class="reference internal" href="#pythonning.logginging.ColoredFormatter"><code class="docutils literal notranslate"><span class="pre">ColoredFormatter</span></code></a><ul>
+<li><a class="reference internal" href="#pythonning.logginging.ColoredFormatter.COLOR_BY_LEVEL"><code class="docutils literal notranslate"><span class="pre">ColoredFormatter.COLOR_BY_LEVEL</span></code></a></li>
+<li><a class="reference internal" href="#pythonning.logginging.ColoredFormatter.COLOR_MAPPING"><code class="docutils literal notranslate"><span class="pre">ColoredFormatter.COLOR_MAPPING</span></code></a></li>
+<li><a class="reference internal" href="#pythonning.logginging.ColoredFormatter.DefaultDict"><code class="docutils literal notranslate"><span class="pre">ColoredFormatter.DefaultDict</span></code></a><ul>
+<li><a class="reference internal" href="#pythonning.logginging.ColoredFormatter.DefaultDict.__init__"><code class="docutils literal notranslate"><span class="pre">ColoredFormatter.DefaultDict.__init__()</span></code></a></li>
+<li><a class="reference internal" href="#pythonning.logginging.ColoredFormatter.DefaultDict.__repr__"><code class="docutils literal notranslate"><span class="pre">ColoredFormatter.DefaultDict.__repr__()</span></code></a></li>
+<li><a class="reference internal" href="#pythonning.logginging.ColoredFormatter.DefaultDict.clear"><code class="docutils literal notranslate"><span class="pre">ColoredFormatter.DefaultDict.clear()</span></code></a></li>
+<li><a class="reference internal" href="#pythonning.logginging.ColoredFormatter.DefaultDict.copy"><code class="docutils literal notranslate"><span class="pre">ColoredFormatter.DefaultDict.copy()</span></code></a></li>
+<li><a class="reference internal" href="#pythonning.logginging.ColoredFormatter.DefaultDict.fromkeys"><code class="docutils literal notranslate"><span class="pre">ColoredFormatter.DefaultDict.fromkeys()</span></code></a></li>
+<li><a class="reference internal" href="#pythonning.logginging.ColoredFormatter.DefaultDict.get"><code class="docutils literal notranslate"><span class="pre">ColoredFormatter.DefaultDict.get()</span></code></a></li>
+<li><a class="reference internal" href="#pythonning.logginging.ColoredFormatter.DefaultDict.items"><code class="docutils literal notranslate"><span class="pre">ColoredFormatter.DefaultDict.items()</span></code></a></li>
+<li><a class="reference internal" href="#pythonning.logginging.ColoredFormatter.DefaultDict.keys"><code class="docutils literal notranslate"><span class="pre">ColoredFormatter.DefaultDict.keys()</span></code></a></li>
+<li><a class="reference internal" href="#pythonning.logginging.ColoredFormatter.DefaultDict.pop"><code class="docutils literal notranslate"><span class="pre">ColoredFormatter.DefaultDict.pop()</span></code></a></li>
+<li><a class="reference internal" href="#pythonning.logginging.ColoredFormatter.DefaultDict.popitem"><code class="docutils literal notranslate"><span class="pre">ColoredFormatter.DefaultDict.popitem()</span></code></a></li>
+<li><a class="reference internal" href="#pythonning.logginging.ColoredFormatter.DefaultDict.setdefault"><code class="docutils literal notranslate"><span class="pre">ColoredFormatter.DefaultDict.setdefault()</span></code></a></li>
+<li><a class="reference internal" href="#pythonning.logginging.ColoredFormatter.DefaultDict.update"><code class="docutils literal notranslate"><span class="pre">ColoredFormatter.DefaultDict.update()</span></code></a></li>
+<li><a class="reference internal" href="#pythonning.logginging.ColoredFormatter.DefaultDict.values"><code class="docutils literal notranslate"><span class="pre">ColoredFormatter.DefaultDict.values()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pythonning.logginging.ColoredFormatter.__init__"><code class="docutils literal notranslate"><span class="pre">ColoredFormatter.__init__()</span></code></a></li>
+<li><a class="reference internal" href="#pythonning.logginging.ColoredFormatter.colors"><code class="docutils literal notranslate"><span class="pre">ColoredFormatter.colors</span></code></a></li>
+<li><a class="reference internal" href="#pythonning.logginging.ColoredFormatter.converter"><code class="docutils literal notranslate"><span class="pre">ColoredFormatter.converter()</span></code></a></li>
+<li><a class="reference internal" href="#pythonning.logginging.ColoredFormatter.default_msec_format"><code class="docutils literal notranslate"><span class="pre">ColoredFormatter.default_msec_format</span></code></a></li>
+<li><a class="reference internal" href="#pythonning.logginging.ColoredFormatter.default_time_format"><code class="docutils literal notranslate"><span class="pre">ColoredFormatter.default_time_format</span></code></a></li>
+<li><a class="reference internal" href="#pythonning.logginging.ColoredFormatter.format"><code class="docutils literal notranslate"><span class="pre">ColoredFormatter.format()</span></code></a></li>
+<li><a class="reference internal" href="#pythonning.logginging.ColoredFormatter.formatException"><code class="docutils literal notranslate"><span class="pre">ColoredFormatter.formatException()</span></code></a></li>
+<li><a class="reference internal" href="#pythonning.logginging.ColoredFormatter.formatMessage"><code class="docutils literal notranslate"><span class="pre">ColoredFormatter.formatMessage()</span></code></a></li>
+<li><a class="reference internal" href="#pythonning.logginging.ColoredFormatter.formatStack"><code class="docutils literal notranslate"><span class="pre">ColoredFormatter.formatStack()</span></code></a></li>
+<li><a class="reference internal" href="#pythonning.logginging.ColoredFormatter.formatTime"><code class="docutils literal notranslate"><span class="pre">ColoredFormatter.formatTime()</span></code></a></li>
+<li><a class="reference internal" href="#pythonning.logginging.ColoredFormatter.usesTime"><code class="docutils literal notranslate"><span class="pre">ColoredFormatter.usesTime()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pythonning.logginging.LogColor"><code class="docutils literal notranslate"><span class="pre">LogColor</span></code></a><ul>
+<li><a class="reference internal" href="#pythonning.logginging.LogColor.black"><code class="docutils literal notranslate"><span class="pre">LogColor.black</span></code></a></li>
+<li><a class="reference internal" href="#pythonning.logginging.LogColor.black_bold"><code class="docutils literal notranslate"><span class="pre">LogColor.black_bold</span></code></a></li>
+<li><a class="reference internal" href="#pythonning.logginging.LogColor.black_faint"><code class="docutils literal notranslate"><span class="pre">LogColor.black_faint</span></code></a></li>
+<li><a class="reference internal" href="#pythonning.logginging.LogColor.blue"><code class="docutils literal notranslate"><span class="pre">LogColor.blue</span></code></a></li>
+<li><a class="reference internal" href="#pythonning.logginging.LogColor.blue_bold"><code class="docutils literal notranslate"><span class="pre">LogColor.blue_bold</span></code></a></li>
+<li><a class="reference internal" href="#pythonning.logginging.LogColor.blue_faint"><code class="docutils literal notranslate"><span class="pre">LogColor.blue_faint</span></code></a></li>
+<li><a class="reference internal" href="#pythonning.logginging.LogColor.cyan"><code class="docutils literal notranslate"><span class="pre">LogColor.cyan</span></code></a></li>
+<li><a class="reference internal" href="#pythonning.logginging.LogColor.cyan_bold"><code class="docutils literal notranslate"><span class="pre">LogColor.cyan_bold</span></code></a></li>
+<li><a class="reference internal" href="#pythonning.logginging.LogColor.cyan_faint"><code class="docutils literal notranslate"><span class="pre">LogColor.cyan_faint</span></code></a></li>
+<li><a class="reference internal" href="#pythonning.logginging.LogColor.green"><code class="docutils literal notranslate"><span class="pre">LogColor.green</span></code></a></li>
+<li><a class="reference internal" href="#pythonning.logginging.LogColor.green_bold"><code class="docutils literal notranslate"><span class="pre">LogColor.green_bold</span></code></a></li>
+<li><a class="reference internal" href="#pythonning.logginging.LogColor.green_faint"><code class="docutils literal notranslate"><span class="pre">LogColor.green_faint</span></code></a></li>
+<li><a class="reference internal" href="#pythonning.logginging.LogColor.grey"><code class="docutils literal notranslate"><span class="pre">LogColor.grey</span></code></a></li>
+<li><a class="reference internal" href="#pythonning.logginging.LogColor.magenta"><code class="docutils literal notranslate"><span class="pre">LogColor.magenta</span></code></a></li>
+<li><a class="reference internal" href="#pythonning.logginging.LogColor.magenta_bold"><code class="docutils literal notranslate"><span class="pre">LogColor.magenta_bold</span></code></a></li>
+<li><a class="reference internal" href="#pythonning.logginging.LogColor.magenta_faint"><code class="docutils literal notranslate"><span class="pre">LogColor.magenta_faint</span></code></a></li>
+<li><a class="reference internal" href="#pythonning.logginging.LogColor.red"><code class="docutils literal notranslate"><span class="pre">LogColor.red</span></code></a></li>
+<li><a class="reference internal" href="#pythonning.logginging.LogColor.red_bold"><code class="docutils literal notranslate"><span class="pre">LogColor.red_bold</span></code></a></li>
+<li><a class="reference internal" href="#pythonning.logginging.LogColor.red_faint"><code class="docutils literal notranslate"><span class="pre">LogColor.red_faint</span></code></a></li>
+<li><a class="reference internal" href="#pythonning.logginging.LogColor.reset"><code class="docutils literal notranslate"><span class="pre">LogColor.reset</span></code></a></li>
+<li><a class="reference internal" href="#pythonning.logginging.LogColor.white"><code class="docutils literal notranslate"><span class="pre">LogColor.white</span></code></a></li>
+<li><a class="reference internal" href="#pythonning.logginging.LogColor.white_bold"><code class="docutils literal notranslate"><span class="pre">LogColor.white_bold</span></code></a></li>
+<li><a class="reference internal" href="#pythonning.logginging.LogColor.white_faint"><code class="docutils literal notranslate"><span class="pre">LogColor.white_faint</span></code></a></li>
+<li><a class="reference internal" href="#pythonning.logginging.LogColor.yellow"><code class="docutils literal notranslate"><span class="pre">LogColor.yellow</span></code></a></li>
+<li><a class="reference internal" href="#pythonning.logginging.LogColor.yellow_bold"><code class="docutils literal notranslate"><span class="pre">LogColor.yellow_bold</span></code></a></li>
+<li><a class="reference internal" href="#pythonning.logginging.LogColor.yellow_faint"><code class="docutils literal notranslate"><span class="pre">LogColor.yellow_faint</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="../_static/documentation_options.js?v=6cf1fb80"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/furo.js?v=32e29ea5"></script>
+    </body>
+</html>
