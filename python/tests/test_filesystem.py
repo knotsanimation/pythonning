@@ -9,6 +9,8 @@ from pythonning.filesystem import move_directory_content
 from pythonning.filesystem import get_dir_content
 from pythonning.filesystem import copytree
 from pythonning.filesystem import copyfile
+from pythonning.filesystem import rmtree
+from pythonning.filesystem import set_path_read_only
 from pythonning.filesystem._copying import _COPYING_CACHE
 
 
@@ -279,3 +281,31 @@ def test_copyfile_cache(tmp_path: Path, data_root_dir: Path):
 
     _COPYING_CACHE.clear()
     assert _COPYING_CACHE.is_empty
+
+
+def _mkdir(root: Path, *args):
+    path = root.joinpath(*args)
+    path.mkdir()
+    return path
+
+
+def _mkfile(root: Path, name: str, content="placeholder"):
+    path = root / name
+    path.write_text(content)
+    return path
+
+
+def test_rmtree(tmp_path: Path, data_root_dir: Path):
+    test_dir = _mkdir(tmp_path, "dst01")
+    file1 = _mkfile(test_dir, "render.jpg")
+    dirA = _mkdir(test_dir, "dirA")
+    fileA1 = _mkfile(dirA, "README.md")
+    dirAA = _mkdir(dirA, "dirAA")
+    fileAA1 = _mkfile(dirAA, "README.md")
+
+    set_path_read_only(fileAA1)
+
+    rmtree(test_dir)
+
+    assert not test_dir.exists()
+    assert not fileAA1.exists()
