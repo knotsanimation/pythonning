@@ -6,7 +6,7 @@
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="git" href="git.html" /><link rel="prev" title="caching" href="caching.html" />
 
     <!-- Generated with Sphinx 7.2.6 and Furo 2023.09.10 -->
-        <title>filesystem - pythonning 1.9.0 documentation</title>
+        <title>filesystem - pythonning 1.10.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=36a5483c" />
@@ -123,7 +123,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../index.html"><div class="brand">pythonning 1.9.0 documentation</div></a>
+      <a href="../index.html"><div class="brand">pythonning 1.10.0 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -146,7 +146,7 @@
       <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
   
   
-  <span class="sidebar-brand-text">pythonning 1.9.0 documentation</span>
+  <span class="sidebar-brand-text">pythonning 1.10.0 documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -336,6 +336,21 @@ Be aware that recursive parsing can take some time for big file trees.</p>
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="pythonning.filesystem.rmtree">
+<span class="sig-prename descclassname"><span class="pre">pythonning.filesystem.</span></span><span class="sig-name descname"><span class="pre">rmtree</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_errors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pythonning.filesystem.rmtree" title="Link to this definition">#</a></dt>
+<dd><p>Remove the directory and its content while handling any potential PermissionError.</p>
+<p>This function is copied from <code class="docutils literal notranslate"><span class="pre">tempfile.TemporaryDirectory._rmtree</span></code></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path</strong> – filesystem path to an existing directory</p></li>
+<li><p><strong>ignore_errors</strong> – do not raise if there is error during cleanup</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="pythonning.filesystem.set_path_read_only">
 <span class="sig-prename descclassname"><span class="pre">pythonning.filesystem.</span></span><span class="sig-name descname"><span class="pre">set_path_read_only</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pythonning.filesystem.set_path_read_only" title="Link to this definition">#</a></dt>
 <dd><p>Remove write permissions for everyone on the given file.</p>
@@ -410,6 +425,7 @@ Be aware that recursive parsing can take some time for big file trees.</p>
 <li><a class="reference internal" href="#pythonning.filesystem.extract_zip"><code class="docutils literal notranslate"><span class="pre">extract_zip()</span></code></a></li>
 <li><a class="reference internal" href="#pythonning.filesystem.get_dir_content"><code class="docutils literal notranslate"><span class="pre">get_dir_content()</span></code></a></li>
 <li><a class="reference internal" href="#pythonning.filesystem.move_directory_content"><code class="docutils literal notranslate"><span class="pre">move_directory_content()</span></code></a></li>
+<li><a class="reference internal" href="#pythonning.filesystem.rmtree"><code class="docutils literal notranslate"><span class="pre">rmtree()</span></code></a></li>
 <li><a class="reference internal" href="#pythonning.filesystem.set_path_read_only"><code class="docutils literal notranslate"><span class="pre">set_path_read_only()</span></code></a></li>
 </ul>
 </li>
@@ -422,7 +438,7 @@ Be aware that recursive parsing can take some time for big file trees.</p>
       
     </aside>
   </div>
-</div><script src="../_static/documentation_options.js?v=c4cb232b"></script>
+</div><script src="../_static/documentation_options.js?v=1d24b1d9"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/scripts/furo.js?v=32e29ea5"></script>
