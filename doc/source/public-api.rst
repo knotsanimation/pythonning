@@ -12,6 +12,7 @@ Public API
     public-api/caching
     public-api/filesystem
     public-api/git
+    public-api/logginging
     public-api/mathing
     public-api/progress
     public-api/web
